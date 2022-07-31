@@ -1,13 +1,9 @@
-li {
-    color: blue
+header a {
+    font-size: 30px;
+    color: teal;
 }
 
-.done {
-    color: grey
+#malos a{
+    font-weight: bolder;
+    color: red;
 }
-
-#clear {
-    background-color: red;
-    color: white;
-}
-
