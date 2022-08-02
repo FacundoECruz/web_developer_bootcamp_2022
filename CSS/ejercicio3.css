@@ -1,9 +1,7 @@
-header a {
-    font-size: 30px;
-    color: teal;
+div:nth-of-type(2n){
+    background-color: black;
 }
 
-#malos a{
-    font-weight: bolder;
-    color: red;
+div > div{
+    background-color: red;
 }
