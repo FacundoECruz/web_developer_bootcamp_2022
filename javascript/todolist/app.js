@@ -1,12 +1,4 @@
-let user = prompt('What would you like to do?')
-const todo = [];
-while (user !== 'quit') {
-    if (user === 'new'){
-        let nueva = prompt('Enter new todo');
-    }
-}
-let input = prompt("What would you like to do?")
-
+let input = prompt('What would you like to do?')
 const todos = [];
 
 while (input !== "quit" && input !=="q") {
