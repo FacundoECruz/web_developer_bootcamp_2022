@@ -1,8 +1,11 @@
-let name = prompt('Cual es tu nombre?')
+//Hi exercise
 
-function saludo(){
-    console.log(`Hola ${name}`);
-    console.log('Como estas?');
+function repeat(message, count) {
+    let result = '';
+    for (let i = 0; i < count; i++) {
+        result += message;
+    }
+    console.log(result);
 }
 
-saludo(name);
+repeat('hi', 3);
