@@ -33,12 +33,21 @@
 //     }
 // }
 
-const mymath = {
-    PI: 3.14159,
-    sqare(num) {
-        return num * num;
+// const mymath = {
+//     PI: 3.14159,
+//     sqare(num) {
+//         return num * num;
+//     },
+//     cube(num) {
+//         return num ** 3;
+//     }
+// }
+
+const square = {
+    area(side) {
+        return side * side;
     },
-    cube(num) {
-        return num ** 3;
+    perimeter(side) {
+        return side * 4;
     }
-}
+};
