@@ -19,10 +19,16 @@
 
 // lastElement(names);
 
-function capitalize(str) {
-    let first = str[0].toUpperCase;
-    str.splice(0, 1, first);
-    console.log(str);
-}
+// function capitalize(str) {
+//     let first = str[0].toUpperCase;
+//     str.splice(0, 1, first);
+//     console.log(str);
+// }
 
-capitalize('hola')
+// capitalize('hola')
+
+function makeBetweenFunc(min, max) {
+    return function (num) {
+        return num >= min && num <= max; 
+    }
+}
