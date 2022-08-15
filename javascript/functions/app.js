@@ -27,8 +27,18 @@
 
 // capitalize('hola')
 
-function makeBetweenFunc(min, max) {
-    return function (num) {
-        return num >= min && num <= max; 
+// function makeBetweenFunc(min, max) {
+//     return function (num) {
+//         return num >= min && num <= max; 
+//     }
+// }
+
+const mymath = {
+    PI: 3.14159,
+    sqare(num) {
+        return num * num;
+    },
+    cube(num) {
+        return num ** 3;
     }
 }
