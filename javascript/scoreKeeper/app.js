@@ -1,57 +1,56 @@
-const nosBut = document.querySelector('#nosBut');
-const ellosBut = document.querySelector('#ellosBut');
+const nos = {
+    score: 0,
+    button: document.querySelector('#nosBut'),
+    display: document.querySelector('#nosDisplay')
+}
+
+const ellos = {
+    score: 0,
+    button: document.querySelector('#ellosBut'),
+    display: document.querySelector('#ellosDisplay')
+}
+
+
 const resetBut = document.querySelector('#reset');
 const ptsSelect = document.querySelector('#pts');
-
-const nosDisplay = document.querySelector('#nosDisplay');
-const ellosDisplay = document.querySelector('#ellosDisplay');
-
-let nos = 0;
-let ellos = 0;
-let winningScore = 5;
+let winningScore = 15;
 let isGameOver = false;
 
-nosBut.addEventListener('click', function () {
+function updateScores(player, opponent) {
     if (!isGameOver) {
-        nos += 1;
-        if (nos === winningScore) {
+        player.score += 1;
+        if (player.score === winningScore) {
             isGameOver = true;
-            nosDisplay.classList.add('has-text-success');
-            ellosDisplay.classList.add('has-text-danger');
-            nosBut.disabled = true;
-            ellosBut.disabled = true;
+            player.display.classList.add('has-text-success');
+            opponent.display.classList.add('has-text-danger');
+            player.button.disabled = true;
+            opponent.button.disabled = true;
         }
-        nosDisplay.textContent = nos;
+        player.display.textContent = player.score;
     }
+}
+
+nos.button.addEventListener('click', function () {
+    updateScores(nos, ellos)
 });
 
-ellosBut.addEventListener('click', function () {
-    if (!isGameOver) {
-        ellos += 1;
-        if (ellos === winningScore) {
-            isGameOver = true;
-            ellosDisplay.classList.add('has-text-success');
-            nosDisplay.classList.add('has-text-danger');
-            nosBut.disabled = true;
-            ellosBut.disabled = true;
-        }
-        ellosDisplay.textContent = ellos;
-    }
+ellos.button.addEventListener('click', function () {
+    updateScores(ellos, nos)
 });
 
-ptsSelect.addEventListener('change', function () {
-    pts = parseInt(this.value);
+ptsSelect.addEventListener('change', function (e) {
+    winningScore = parseInt(this.value);
     reset();
 });
 
-resetBut.addEventListener('click', reset)
+resetBut.addEventListener('click', reset);
 
 function reset() {
-    isGameOver - false;
-    nos = 0;
-    ellos = 0;
-    nosDisplay.textContent = 0;
-    ellosDisplay.textContent = 0;
-    ellosDisplay.classList.remove('has-text-success', 'has-text-danger');
-    nosDisplay.classList.remove('has-text-success', 'has-text-danger');
+    isGameOver = false;
+    for (let p of [nos, ellos]) {
+        p.score = 0;
+        p.display.textContent = 0;
+        p.display.classList.remove('has-text-success', 'has-text-danger');
+        p.button.disabled = false;
+    }
 };
