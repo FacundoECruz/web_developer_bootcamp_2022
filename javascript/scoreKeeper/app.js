@@ -16,8 +16,10 @@ nosBut.addEventListener('click', function () {
         nos += 1;
         if (nos === winningScore) {
             isGameOver = true;
-            nosDisplay.classList.add('winner');
-            ellosDisplay.classList.add('loser');
+            nosDisplay.classList.add('has-text-success');
+            ellosDisplay.classList.add('has-text-danger');
+            nosBut.disabled = true;
+            ellosBut.disabled = true;
         }
         nosDisplay.textContent = nos;
     }
@@ -28,8 +30,10 @@ ellosBut.addEventListener('click', function () {
         ellos += 1;
         if (ellos === winningScore) {
             isGameOver = true;
-            ellosDisplay.classList.add('winner');
-            nosDisplay.classList.add('loser');
+            ellosDisplay.classList.add('has-text-success');
+            nosDisplay.classList.add('has-text-danger');
+            nosBut.disabled = true;
+            ellosBut.disabled = true;
         }
         ellosDisplay.textContent = ellos;
     }
@@ -48,6 +52,6 @@ function reset() {
     ellos = 0;
     nosDisplay.textContent = 0;
     ellosDisplay.textContent = 0;
-    ellosDisplay.classList.remove('winner', 'loser');
-    nosDisplay.classList.remove('winner', 'loser');
+    ellosDisplay.classList.remove('has-text-success', 'has-text-danger');
+    nosDisplay.classList.remove('has-text-success', 'has-text-danger');
 };
