@@ -38,6 +38,15 @@
                         <div class="content">
                             <h1 class="title is-1"><span id="nosDisplay">0</span> <span>to</span> <span id="ellosDisplay">0</span></h1>
                             <p class="subtitle">Use the buttons below to keep score</p>
+
+                            <label for="pts" class="label is-large is-inline">Jugar a</label>
+                            <div class="select is-rounded">
+                                <select name="points" id="pts">
+                                    <option value="15">15</option>
+                                    <option value="30">30</option>
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                     <footer class="card-footer">
@@ -52,19 +61,8 @@
 
 
     <img src="images/truco.jpg" alt="">
+    
 
-
-    <p>Playing to</p>
-    <select name="points" id="pts">
-        <option value="15">15</option>
-        <option value="30">30</option>
-    </select>
-
-    <div>
-        <button >+1 Nosotre'</button>
-        <button id="ellosBut">+1 Eyes</button>
-        <button id="reset">Reset</button>
-    </div>
     <script src="app.js"></script>
 </body>
 

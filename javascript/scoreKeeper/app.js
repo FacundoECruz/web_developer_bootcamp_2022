@@ -50,4 +50,4 @@ function reset() {
     ellosDisplay.textContent = 0;
     ellosDisplay.classList.remove('winner', 'loser');
     nosDisplay.classList.remove('winner', 'loser');
-}
+};
