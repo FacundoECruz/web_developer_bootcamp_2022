@@ -10,6 +10,11 @@ app.get('/', (req, res) => {
     res.send('This is the home page!')
 })
 
+app.get('/r/:subreddit', (req, res) => {
+    const { subreddit } = req.params;
+    res.send(`<h1>Browsing the ${subreddit} subreddit`)
+})
+
 app.get('/cats', (req, res) => {
     res.send('MEOW!!')
 })
