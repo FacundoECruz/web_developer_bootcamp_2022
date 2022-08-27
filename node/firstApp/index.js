@@ -18,6 +18,10 @@ app.get('/DOGS', (req, res) => {
     res.send('WOOF!!')
 })
 
+app.get('*', (req, res) => {
+    res.send(`I don't know that path!`)
+})
+
 app.listen(3000, () => {
     console.log("LISTENING ON PORT 3000");
 })
