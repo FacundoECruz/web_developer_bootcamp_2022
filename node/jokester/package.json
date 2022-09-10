@@ -1,0 +1,28 @@
+{
+  "name": "jokester",
+  "version": "1.0.0",
+  "description": "chistes",
+  "main": "index.js",
+  "scripts": {
+    "test": "asdf"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FacundoECruz/web_developer_bootcamp_2022.git"
+  },
+  "keywords": [
+    "chistes",
+    "package",
+    "exercise"
+  ],
+  "author": "give-me-a-joke",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FacundoECruz/web_developer_bootcamp_2022/issues"
+  },
+  "homepage": "https://github.com/FacundoECruz/web_developer_bootcamp_2022#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "give-me-a-joke": "^0.5.1"
+  }
+}
