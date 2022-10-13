@@ -6,6 +6,7 @@ const SoccerFieldSchema = new Schema({
     location: String,
     price: String,
     description: String
-})
+},
+{ collection: 'soccerfields' })
 
 module.exports = mongoose.model('SoccerField', SoccerFieldSchema)
