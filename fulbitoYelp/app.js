@@ -20,7 +20,7 @@ app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
 app.get('/', async (req, res) => {
-    const field = new SoccerField({title: 'Futbol 5 LP', description: 'Alta canchita'});
+    const field = new SoccerField({title: 'Fulwacho', description: 'Futbol champagne'});
     await field.save();
     res.send(field);
 })
