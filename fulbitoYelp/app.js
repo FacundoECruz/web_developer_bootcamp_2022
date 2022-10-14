@@ -28,6 +28,10 @@ app.get('/soccerfields', async (req, res) => {
     res.render('soccerfields/index', { soccerfield });
 })
 
+app.get('/soccerfields/new', (req, res) => {
+    res.render('soccerfields/new')
+})
+
 app.get('/soccerfields/:id', async (req, res) => {
     const { id } = req.params;
     const soccerfield = await SoccerField.findById(id);
