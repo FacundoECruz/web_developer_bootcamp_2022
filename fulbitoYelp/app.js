@@ -28,11 +28,10 @@ app.get('/soccerfields', async (req, res) => {
     res.render('soccerfields/index', { soccerfield });
 })
 
-app.get('soccerfields/:id', async (req, res) => {
-    // const { id } = req.params;
-    // const soccerfield = SoccerField.findById(id);
-    // console.log(soccerfield)
-    res.render('soccerfields/show')
+app.get('/soccerfields/:id', async (req, res) => {
+    const { id } = req.params;
+    const soccerfield = await SoccerField.findById(id);
+    res.render('soccerfields/show', { soccerfield })
 })
 
 app.listen(3000, () => {
