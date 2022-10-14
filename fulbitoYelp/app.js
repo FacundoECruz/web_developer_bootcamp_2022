@@ -19,6 +19,8 @@ const app = express()
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
+app.use(express.urlencoded({ extended: true }))
+
 app.get('/', async (req, res) => {
     res.render('home')
 })
@@ -30,6 +32,12 @@ app.get('/soccerfields', async (req, res) => {
 
 app.get('/soccerfields/new', (req, res) => {
     res.render('soccerfields/new')
+})
+
+app.post('/soccerfields', async (req, res) => {
+    const soccerfield = new SoccerField(req.body.soccerfield);
+    await soccerfield.save();
+    res.redirect(`/soccerfields/${soccerfield._id}`)  
 })
 
 app.get('/soccerfields/:id', async (req, res) => {
