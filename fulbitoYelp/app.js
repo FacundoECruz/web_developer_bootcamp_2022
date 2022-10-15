@@ -41,14 +41,12 @@ app.post('/soccerfields', async (req, res) => {
 })
 
 app.get('/soccerfields/:id', async (req, res) => {
-    const { id } = req.params;
-    const soccerfield = await SoccerField.findById(id);
+    const soccerfield = await SoccerField.findById(req.params.id);
     res.render('soccerfields/show', { soccerfield })
 })
 
 app.get('/soccerfields/:id/edit', async (req,res) => {
-    const { id } = req.params;
-    const soccerfield = await SoccerField.findById(id);
+    const soccerfield = await SoccerField.findById(req.params.id);
     res.render('soccerfields/edit', { soccerfield });
 })
 
