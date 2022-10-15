@@ -46,6 +46,12 @@ app.get('/soccerfields/:id', async (req, res) => {
     res.render('soccerfields/show', { soccerfield })
 })
 
+app.get('/soccerfields/:id/edit', async (req,res) => {
+    const { id } = req.params;
+    const soccerfield = await SoccerField.findById(id);
+    res.render('soccerfields/edit', { soccerfield });
+})
+
 app.listen(3000, () => {
     console.log('ON 3000')
 })
