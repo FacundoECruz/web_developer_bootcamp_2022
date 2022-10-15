@@ -7,7 +7,7 @@
     <title>Edit</title>
 </head>
 <body>
-    <form action="/soccerfields/<%= soccerfield._id %> " method="POST">
+    <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST">
         <div>
             <label for="title">Title</label>
             <input id="title" type="text" name="soccerfield[title]" value="<%= soccerfield.title %>">
