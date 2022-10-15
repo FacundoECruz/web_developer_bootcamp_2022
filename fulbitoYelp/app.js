@@ -58,6 +58,12 @@ app.put('/soccerfields/:id', async (req, res) => {
     res.redirect(`/soccerfields/${ soccerfield.id }`)
 })
 
+app.delete('/soccerfields/:id', async (req, res) => {
+    const { id } = req.params;
+    await SoccerField.findByIdAndDelete(id)
+    res.redirect('/soccerfields')
+})
+
 app.listen(3000, () => {
     console.log('ON 3000')
 })

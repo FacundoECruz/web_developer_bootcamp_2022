@@ -10,6 +10,10 @@
     <h1><%= soccerfield.title %> </h1>
     <h1><%= soccerfield.location %></h1>
 
+    <form action="/soccerfields/<%= soccerfield._id %>?_method=DELETE" method="POST">
+        <button>Borrar</button>
+    </form>
+
     <p><a href="/soccerfields/<%= soccerfield._id %>/edit">Editar</a></p>
     <a href="/soccerfields">Volver al inicio</a>
 </body>
