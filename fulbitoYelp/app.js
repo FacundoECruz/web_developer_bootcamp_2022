@@ -3,6 +3,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const SoccerField = require('./models/soccerField')
 const methodOverride = require('method-override')
+const engine = require('ejs-mate')
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
     useNewUrlParser: true,
@@ -17,6 +18,7 @@ db.once("open", () => {
 
 const app = express()
 
+app.engine('ejs', engine);
 app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
 
