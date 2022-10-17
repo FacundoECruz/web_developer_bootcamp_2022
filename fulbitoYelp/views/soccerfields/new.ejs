@@ -4,12 +4,20 @@
     <div class="col-6 offset-3">
         <form action="/soccerfields" method="POST">
             <div class="mb-3">
-                <label class="form-label" for="title">Title</label>
+                <label class="form-label" for="title">Nombre</label>
                 <input class="form-control" id="title" type="text" name="soccerfield[title]">
             </div>
-            <div>
-                <label class="form-label" for="location">Location</label>
+            <div class="mb-3">
+                <label class="form-label" for="location">Ubicación</label>
                 <input class="form-control" id="location" type="text" name="soccerfield[location]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="image">Imagen</label>
+                <input class="form-control" id="image" type="text" name="soccerfield[image]">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="description">Descripción</label>
+                <textarea class="form-control" id="description" type="text" name="soccerfield[description]"></textarea>
             </div>
             <div class="mb-3"><button class="btn btn-success">Add Soccerfield</button></div>
         </form>
