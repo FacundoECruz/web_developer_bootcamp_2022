@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 const SoccerFieldSchema = new Schema({
     title: String,
     location: String,
-    price: String,
+    image: String, 
+    price: Number,
     description: String
 },
 { collection: 'soccerfields' })

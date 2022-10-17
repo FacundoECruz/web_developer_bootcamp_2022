@@ -2,6 +2,9 @@
     <h1><%= soccerfield.title %> </h1>
     <h1><%= soccerfield.location %></h1>
 
+    <img src="<%= soccerfield.image %>" alt="">
+    <p><%= soccerfield.description %></p>
+
     <form action="/soccerfields/<%= soccerfield._id %>?_method=DELETE" method="POST">
         <button>Borrar</button>
     </form>
