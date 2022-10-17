@@ -1,15 +1,18 @@
 <% layout('layouts/boilerplate') %> 
-<h1>Nueva Cancha</h1>
-    <form action="/soccerfields" method="POST">
-        <div>
-            <label for="title">Title</label>
-            <input id="title" type="text" name="soccerfield[title]">
-        </div>
-        <div>
-            <label for="location">Location</label>
-            <input id="location" type="text" name="soccerfield[location]">
-        </div>
-        <button>Add Soccerfield</button>
-    </form>
-
-    <a href="/soccerfields">Volver a inicio</a>
+<div class="row">
+    <h1 class="text-center">Nueva Cancha</h1>
+    <div class="col-6 offset-3">
+        <form action="/soccerfields" method="POST">
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input class="form-control" id="title" type="text" name="soccerfield[title]">
+            </div>
+            <div>
+                <label class="form-label" for="location">Location</label>
+                <input class="form-control" id="location" type="text" name="soccerfield[location]">
+            </div>
+            <div class="mb-3"><button class="btn btn-success">Add Soccerfield</button></div>
+        </form>
+        <a href="/soccerfields">Volver a inicio</a>    
+    </div>
+</div>
