@@ -1,15 +1,35 @@
 <% layout('layouts/boilerplate') %> 
-    <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST">
-        <div>
-            <label for="title">Title</label>
-            <input id="title" type="text" name="soccerfield[title]" value="<%= soccerfield.title %>">
+    <div class="row">
+        <h1 class="text-center">Nueva Cancha</h1>
+        <div class="col-6 offset-3">
+            <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Nombre</label>
+                    <input class="form-control" id="title" type="text" name="soccerfield[title]" value="<%= soccerfield.title %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="location">Ubicación</label>
+                    <input class="form-control" id="location" type="text" name="soccerfield[location]" value="<%= soccerfield.location %>">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="image">Imagen</label>
+                    <input class="form-control" id="image" type="text" name="soccerfield[image]" value="<%= soccerfield.image %>">
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label" for="price">Precio</label>
+                <div class="input-group">
+                    <span class="input-group-text" id="price-label">$</span>
+                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="soccerfield[price]" value="<%= soccerfield.price %>">
+                  </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label" for="description">Descripción</label>
+                    <textarea class="form-control" id="description" type="text" name="soccerfield[description]"><%= soccerfield.description %> </textarea>
+                </div>
+                <div class="mb-3"><button class="btn btn-info">Editar Cancha</button></div>
+            </form>
+            <a href="/soccerfields">Volver a inicio</a>    
         </div>
-        <div>
-            <label for="location">Location</label>
-            <input id="location" type="text" name="soccerfield[location]" value="<%= soccerfield.location %>">
-        </div>
-        <button>Add Soccerfield</button>
-    </form>
-
-    <p><a href="/soccerfields/<%= soccerfield._id %> ">Volver a la cancha</a></p>
-    <a href="/soccerfields">Volver a inicio</a>
+    </div>
