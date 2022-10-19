@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
+const AppError = require('./AppError'); 
 
- 
 app.use(express.urlencoded({ extended:true })); 
 app.use(express.json())
 
@@ -10,7 +10,7 @@ const verifyPassword = (req, res, next) => {
     if(password === 'gato'){
         next();
     }
-    throw new Error('You need a password')
+    throw new AppError('You need a password', 401)
 }
 
 // app.use((req, res, next) => {
@@ -31,10 +31,8 @@ app.use((req, res) => {
   })
 
 app.use((err, req, res, next) => {
-    console.log('************************')
-    console.log('*********ERROR**********')
-    console.log('************************')
-    res.status(500).send("Oh boooy, we've got an errorrrr!!!")
+    const { status = 500, message = 'Error' } = err;
+    res.status(status).send(message)
 }) 
 
 app.listen(3000, () => {
