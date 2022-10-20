@@ -3,6 +3,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const SoccerField = require('./models/soccerField')
 const catchAsync = require('./utils/catchAsync')
+const ExpressError = require('./utils/ExpressError')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
 
@@ -67,8 +68,13 @@ app.delete('/soccerfields/:id', catchAsync(async (req, res) => {
     res.redirect('/soccerfields')
 }))
 
+app.all('*', (req, res, next) => {
+    next(new ExpressError('Página no encontrada', 404))
+})
+
 app.use((err, req, res, next) => {
-    res.send('Algo salió mal')
+    const { message = 'Algo malio sal', statusCode = 500} = err;
+    res.status(statusCode).send(message);
 })
 
 app.listen(3000, () => {
