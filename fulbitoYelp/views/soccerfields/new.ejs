@@ -2,31 +2,31 @@
 <div class="row">
     <h1 class="text-center">Nueva Cancha</h1>
     <div class="col-6 offset-3">
-        <form action="/soccerfields" method="POST">
+        <form action="/soccerfields" method="POST" novalidate class="validated-form">
             <div class="mb-3">
                 <label class="form-label" for="title">Nombre</label>
-                <input class="form-control" id="title" type="text" name="soccerfield[title]">
+                <input class="form-control" id="title" type="text" name="soccerfield[title]" required>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="location">Ubicación</label>
-                <input class="form-control" id="location" type="text" name="soccerfield[location]">
+                <input class="form-control" id="location" type="text" name="soccerfield[location]" required>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="image">Imagen</label>
-                <input class="form-control" id="image" type="text" name="soccerfield[image]">
+                <input class="form-control" id="image" type="text" name="soccerfield[image]" required>
             </div>
             
             <div class="mb-3">
                 <label class="form-label" for="price">Precio</label>
             <div class="input-group">
                 <span class="input-group-text" id="price-label">$</span>
-                <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="soccerfield[price]">
+                <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="soccerfield[price]" required>
               </div>
             </div>
             
             <div class="mb-3">
                 <label class="form-label" for="description">Descripción</label>
-                <textarea class="form-control" id="description" type="text" name="soccerfield[description]"></textarea>
+                <textarea class="form-control" id="description" type="text" name="soccerfield[description]" required></textarea>
             </div>
             <div class="mb-3"><button class="btn btn-success">Agregar Cancha</button></div>
         </form>
