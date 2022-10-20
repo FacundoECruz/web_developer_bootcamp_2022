@@ -38,10 +38,14 @@ app.get('/soccerfields/new', (req, res) => {
     res.render('soccerfields/new')
 })
 
-app.post('/soccerfields', async (req, res) => {
-    const soccerfield = new SoccerField(req.body.soccerfield);
-    await soccerfield.save();
-    res.redirect(`/soccerfields/${soccerfield._id}`)  
+app.post('/soccerfields', async (req, res, next) => {
+    try {
+        const soccerfield = new SoccerField(req.body.soccerfield);
+        await soccerfield.save();
+        res.redirect(`/soccerfields/${soccerfield._id}`)
+    } catch (e) {
+        next(e);
+    }
 })
 
 app.get('/soccerfields/:id', async (req, res) => {
@@ -49,21 +53,25 @@ app.get('/soccerfields/:id', async (req, res) => {
     res.render('soccerfields/show', { soccerfield })
 })
 
-app.get('/soccerfields/:id/edit', async (req,res) => {
+app.get('/soccerfields/:id/edit', async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id);
     res.render('soccerfields/edit', { soccerfield });
 })
 
 app.put('/soccerfields/:id', async (req, res) => {
     const { id } = req.params;
-    const soccerfield = await SoccerField.findByIdAndUpdate(id, { ...req.body.soccerfield}, { new: true })
-    res.redirect(`/soccerfields/${ soccerfield.id }`)
+    const soccerfield = await SoccerField.findByIdAndUpdate(id, { ...req.body.soccerfield }, { new: true })
+    res.redirect(`/soccerfields/${soccerfield.id}`)
 })
 
 app.delete('/soccerfields/:id', async (req, res) => {
     const { id } = req.params;
     await SoccerField.findByIdAndDelete(id)
     res.redirect('/soccerfields')
+})
+
+app.use((err, req, res, next) => {
+    res.send('Algo salió mal')
 })
 
 app.listen(3000, () => {
