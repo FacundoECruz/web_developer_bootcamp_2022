@@ -41,6 +41,7 @@ app.get('/soccerfields/new', (req, res) => {
 })
 
 app.post('/soccerfields', catchAsync(async (req, res) => {
+        if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
         const soccerfield = new SoccerField(req.body.soccerfield);
         await soccerfield.save();
         res.redirect(`/soccerfields/${soccerfield._id}`)
