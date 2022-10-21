@@ -75,7 +75,7 @@ app.all('*', (req, res, next) => {
 
 app.use((err, req, res, next) => {
     const { message = 'Algo malio sal', statusCode = 500} = err;
-    res.status(statusCode).send(message);
+    res.status(statusCode).render('error');
 })
 
 app.listen(3000, () => {
