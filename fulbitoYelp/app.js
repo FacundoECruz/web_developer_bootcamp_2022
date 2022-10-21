@@ -28,6 +28,20 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
+const validateSoccerfield = (req, res, next) => {
+    const soccerfieldSchema = Joi.object({
+        soccerfield: Joi.object({
+            title: Joi.string().required(),
+            price: Joi.number().required().min(0),
+        }).required()
+    }) 
+    const { error } = soccerfieldSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    }
+}
+
 app.get('/', async (req, res) => {
     res.render('home')
 })
@@ -43,17 +57,6 @@ app.get('/soccerfields/new', (req, res) => {
 
 app.post('/soccerfields', catchAsync(async (req, res) => {
         // if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
-        const soccerfieldSchema = Joi.object({
-            soccerfield: Joi.object({
-                title: Joi.string().required(),
-                price: Joi.number().required().min(0),
-            }).required()
-        }) 
-        const { error } = soccerfieldSchema.validate(req.body);
-        if (error) {
-            const msg = error.details.map(el => el.message).join(',')
-            throw new ExpressError(msg, 400)
-        }
         const soccerfield = new SoccerField(req.body.soccerfield);
         await soccerfield.save();
         res.redirect(`/soccerfields/${soccerfield._id}`)
