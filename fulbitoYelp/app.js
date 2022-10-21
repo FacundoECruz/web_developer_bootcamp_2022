@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const SoccerField = require('./models/soccerField')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
+const Joi = require('joi')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
 
@@ -41,7 +42,18 @@ app.get('/soccerfields/new', (req, res) => {
 })
 
 app.post('/soccerfields', catchAsync(async (req, res) => {
-        if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
+        // if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
+        const soccerfieldSchema = Joi.object({
+            soccerfield: Joi.object({
+                title: Joi.string().required(),
+                price: Joi.number().required().min(0),
+            }).required()
+        }) 
+        const { error } = soccerfieldSchema.validate(req.body);
+        if (error) {
+            const msg = error.details.map(el => el.message).join(',')
+            throw new ExpressError(msg, 400)
+        }
         const soccerfield = new SoccerField(req.body.soccerfield);
         await soccerfield.save();
         res.redirect(`/soccerfields/${soccerfield._id}`)
