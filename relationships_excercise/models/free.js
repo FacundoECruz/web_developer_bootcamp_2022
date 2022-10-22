@@ -17,9 +17,27 @@ const freeSchema = new mongoose.Schema({
     champion: [
         {
             competition: String,
+            year: Number,
             location: String,
+            scope: String
         }
     ]
 })
 
 const Free = mongoose.model('Free', freeSchema); 
+
+const makeFree = async () => {
+    const f = new Free({
+        name: 'Chuty',
+        country: 'España',
+    })
+    f.champion.push({
+        competition: 'Red Bull',
+        year: 2013,
+        location: 'España',
+        scope: 'Internacional'
+    })
+    const res = await f.save()
+    console.log(res)
+}
+
