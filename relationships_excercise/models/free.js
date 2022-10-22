@@ -41,3 +41,16 @@ const makeFree = async () => {
     console.log(res)
 }
 
+const addCompe = async (id) => {
+    const f = await Free.findById(id)
+    f.champion.push({
+        competition: 'Red Bull',
+        year: 2017,
+        location: 'España',
+        scope: 'Nacional'
+    })
+    const res = await f.save()
+    console.log(res)
+}
+
+addCompe('63543f0dd314777564803b7d')
