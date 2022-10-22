@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 mongoose.connect('mongodb://localhost:27017/compe', {
     useNewUrlParser: true,
@@ -11,7 +12,7 @@ db.once("open", () => {
     console.log("Database connected")
 })
 
-const freeSchema = new mongoose.Schema({
+const freeSchema = new Schema({
     name: String, 
     country: String,
     champion: [
@@ -24,7 +25,27 @@ const freeSchema = new mongoose.Schema({
     ]
 })
 
+const compeSchema = new Schema({
+    name: String,
+    location: String,
+    competitors: [{ type: Schema.Types.ObjectId, ref: 'Free' }]
+})
+
 const Free = mongoose.model('Free', freeSchema); 
+const Compe = mongoose.model('Compe', compeSchema);
+
+const makeCompe = async () => {
+    const compe = new Compe({name: 'Supremacia', location: 'Perú'})
+    const campeon = await Free.findOne({ name: 'Aczino' })
+    compe.competitors.push(campeon)
+    await compe.save()
+    console.log(compe)
+}
+
+makeCompe()
+
+
+
 
 const makeFree = async () => {
     const f = new Free({
@@ -55,9 +76,10 @@ const addCompe = async (id) => {
 
 // addCompe('63543f0dd314777564803b7d')
 
-Free.insertMany([
-    {name: 'Aczino', country: 'México'},
-    {name: 'Rapder', country: 'México'},
-    {name: 'Gazir', country: 'España'},
-    {name: 'Wos', country: 'Argentina'}
-])
+// Free.insertMany([
+//     {name: 'Aczino', country: 'México'},
+//     {name: 'Rapder', country: 'México'},
+//     {name: 'Gazir', country: 'España'},
+//     {name: 'Wos', country: 'Argentina'}
+// ])
+
