@@ -53,4 +53,11 @@ const addCompe = async (id) => {
     console.log(res)
 }
 
-addCompe('63543f0dd314777564803b7d')
+// addCompe('63543f0dd314777564803b7d')
+
+Free.insertMany([
+    {name: 'Aczino', country: 'México'},
+    {name: 'Rapder', country: 'México'},
+    {name: 'Gazir', country: 'España'},
+    {name: 'Wos', country: 'Argentina'}
+])
