@@ -42,9 +42,15 @@ const makeCompe = async () => {
     console.log(compe)
 }
 
-makeCompe()
+const addFree = async () => {
+    const compe = await Compe.findOne({ name: 'Supremacia' })
+    const free = await Free.findOne({ name: 'Gazir' })
+    compe.competitors.push(free)
+    await compe.save()
+    console.log(compe)
+}
 
-
+addFree()
 
 
 const makeFree = async () => {
