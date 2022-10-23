@@ -23,6 +23,15 @@ const tweetSchema = new Schema({
     user: {type: Schema.Types.ObjectId, ref: 'User'}
 })
 
-const user = mongoose.model('User', userSchema);
-const tweet = mongoose.model('Tweet', tweetSchema);
+const User = mongoose.model('User', userSchema);
+const Tweet = mongoose.model('Tweet', tweetSchema);
 
+const makeTweet = async () => {
+    const user = new User({ username: 'lokillo', age: 35})
+    const tweet1 = new Tweet({ text: 'bailo sobre la mesa', likes: 23})
+    tweet1.user = user
+    user.save()
+    tweet1.save()
+}
+
+makeTweet()
