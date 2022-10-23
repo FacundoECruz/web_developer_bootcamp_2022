@@ -50,9 +50,6 @@ const addFree = async () => {
     console.log(compe)
 }
 
-addFree()
-
-
 const makeFree = async () => {
     const f = new Free({
         name: 'Chuty',
