@@ -64,6 +64,18 @@ app.get('/colleges/:id/courses/new', (req, res) => {
     res.render('courses/new', { id })
 })
 
+app.post('/colleges/:id/courses', async (req, res) => {
+    const { name, teacher, weeks } = req.body.course
+    const course = new Course({ name, teacher, weeks })
+    const { id } = req.params
+    const college = await College.findById(id)
+    college.courses.push(course)
+    course.college = college
+    await college.save()
+    await course.save()
+    res.redirect(`/colleges/${id}`)
+})
+
 app.all('*', (req, res) => {
     res.send('404 NOT FOUND')
 })
