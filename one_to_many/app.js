@@ -55,6 +55,9 @@ app.delete('/colleges/:id', async (req, res) => {
 })
 
 //COURSES ROUTES
+app.get('/courses', (req, res) => {
+    res.render('courses/index')
+})
 
 app.all('*', (req, res) => {
     res.send('404 NOT FOUND')
