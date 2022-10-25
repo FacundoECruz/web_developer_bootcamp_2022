@@ -10,7 +10,7 @@
     <h1>Colleges</h1>
     <ul>
         <% for(let college of colleges) {%>
-            <li><%= college.name %></li>
+            <li><a href="/colleges/<%= college._id %>"><%= college.name %></a></li>
         <% } %>  
     </ul>
 
