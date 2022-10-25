@@ -59,6 +59,11 @@ app.get('/courses', (req, res) => {
     res.render('courses/index')
 })
 
+app.get('/colleges/:id/courses/new', (req, res) => {
+    const { id } = req.params
+    res.render('courses/new', { id })
+})
+
 app.all('*', (req, res) => {
     res.send('404 NOT FOUND')
 })
