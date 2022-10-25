@@ -45,7 +45,8 @@ app.post('/colleges', async (req, res) => {
 
 app.get('/colleges/:id', async (req, res) => {
     const { id } = req.params
-    const college = await College.findById(id)
+    const college = await College.findById(id).populate('courses')
+    console.log(college)
     res.render('colleges/show', { college })
 })
 

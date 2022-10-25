@@ -14,5 +14,14 @@
     <form action="/colleges/<%= college._id %>?_method=DELETE" method="POST">
         <button>Delete</button>
     </form>
+
+    <ul>
+        <% for(let course of college.courses) {%>
+            <li><%= course.name %></li>
+        <% } %>  
+    </ul>
+
+    <a href="/colleges">Back to Index</a>
+    <a href="/colleges/<%= college._id %>/courses/new">Add Course</a>
 </body>
 </html>
