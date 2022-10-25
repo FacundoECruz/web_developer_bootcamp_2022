@@ -60,9 +60,10 @@ app.get('/courses', (req, res) => {
     res.render('courses/index')
 })
 
-app.get('/colleges/:id/courses/new', (req, res) => {
+app.get('/colleges/:id/courses/new', async (req, res) => {
     const { id } = req.params
-    res.render('courses/new', { id })
+    const college = await College.findById(id)
+    res.render('courses/new', { id, college })
 })
 
 app.post('/colleges/:id/courses', async (req, res) => {
@@ -75,6 +76,11 @@ app.post('/colleges/:id/courses', async (req, res) => {
     await college.save()
     await course.save()
     res.redirect(`/colleges/${id}`)
+})
+
+app.get('/courses/:id', (req, res) => {
+    const { id } = req.params
+    res.render('courses/show')
 })
 
 app.all('*', (req, res) => {
