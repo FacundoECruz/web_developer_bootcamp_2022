@@ -10,5 +10,9 @@
     <h1><%= college.name %></h1>
     <h3>Ubicacion: <%= college.location %></h3>
     <h3>Modalidad: <%= college.modality %></h3>
+
+    <form action="/colleges/<%= college._id %>?_method=DELETE" method="POST">
+        <button>Delete</button>
+    </form>
 </body>
 </html>

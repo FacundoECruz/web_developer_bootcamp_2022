@@ -46,6 +46,11 @@ app.get('/colleges/:id', async (req, res) => {
     res.render('colleges/show', { college })
 })
 
+app.delete('/colleges/:id', async (req, res) => {
+    const college = await College.findByIdAndDelete(req.params.id)
+    res.redirect('/colleges')
+})
+
 app.all('*', (req, res) => {
     res.send('404 NOT FOUND')
 })
