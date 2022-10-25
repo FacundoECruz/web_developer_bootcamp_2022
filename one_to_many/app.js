@@ -3,6 +3,7 @@ const path = require('path')
 const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
+const College = require('./models/College')
 
 mongoose.connect('mongodb://localhost:27017/college', {
     useNewUrlParser: true,
@@ -26,6 +27,16 @@ app.use(methodOverride('_method'))
 
 app.get('/colleges', (req, res) => {
     res.render('colleges/index')
+})
+
+app.get('/colleges/new', (req, res) => {
+    res.render('colleges/new')
+})
+
+app.post('/colleges', async (req, res) => {
+    const college = new College(req.body.college)
+    await college.save()
+    res.redirect('/colleges')
 })
 
 app.listen(3000, () => {

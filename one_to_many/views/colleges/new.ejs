@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New College</title>
+</head>
+<body>
+    <h1>Create a new college</h1>
+    <form action="/colleges" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" name="college[name]" id="name">
+        
+        <label for="location">Location:</label>
+        <input type="text" name="college[location]" id="location">
+        
+        <label for="modality">Modality:</label>
+        <input type="text" name="college[modality]" id="modality">
+
+        <button>Submit</button>
+    </form>
+</body>
+</html>
