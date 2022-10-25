@@ -78,9 +78,15 @@ app.post('/colleges/:id/courses', async (req, res) => {
     res.redirect(`/colleges/${id}`)
 })
 
-app.get('/courses/:id', (req, res) => {
+app.get('/courses/:id', async (req, res) => {
     const { id } = req.params
-    res.render('courses/show')
+    const course = await Course.findById(id)
+    res.render('courses/show', { course })
+})
+
+app.delete('/courses/:id', async (req, res) => {
+    const course = await Course.findByIdAndDelete(req.params.id)
+    res.redirect('/colleges')
 })
 
 app.all('*', (req, res) => {
