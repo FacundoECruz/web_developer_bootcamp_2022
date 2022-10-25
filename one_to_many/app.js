@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
 const College = require('./models/College')
+const Course = require('./models/Course')
 
 mongoose.connect('mongodb://localhost:27017/college', {
     useNewUrlParser: true,
@@ -24,6 +25,8 @@ app.set('views', path.join(__dirname, 'views'))
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
+
+//COLLEGES ROUTES
 
 app.get('/colleges', async (req, res) => {
     const colleges = await College.find({}) 
@@ -50,6 +53,8 @@ app.delete('/colleges/:id', async (req, res) => {
     const college = await College.findByIdAndDelete(req.params.id)
     res.redirect('/colleges')
 })
+
+//COURSES ROUTES
 
 app.all('*', (req, res) => {
     res.send('404 NOT FOUND')
