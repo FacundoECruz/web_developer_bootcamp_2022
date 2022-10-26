@@ -25,7 +25,8 @@
                 </div>
             </div>
             <h2>Dejá una reseña</h2>
-            <form action="/soccerfields/<%= soccerfield._id %>/reviews" method="POST" class="mb-3 validated-form" novalidate>
+            <form action="/soccerfields/<%= soccerfield._id %>/reviews" method="POST" class="mb-3 validated-form"
+                novalidate>
                 <div class="mb-3">
                     <label class="form-label" for="rating">Puntaje</label>
                     <input class="form-range" type="range" min="1" max="5" name="review[rating]" id="rating">
@@ -40,10 +41,12 @@
                 <button class="btn btn-success">Enviar</button>
             </form>
             <% for(let review of soccerfield.reviews) {%>
-                <div class="mb-3">
-                    <p>Puntaje: <%= review.rating %> </p>
-                    <p>Comentario: <%= review.body %> </p>
-                </div> 
-            <% } %>         
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Puntaje: <%= review.rating %></h5>
+                        <p class="card-text">Comentario: <%= review.body %></p>
+                    </div>
+                </div>
+                <% } %>
         </div>
     </div>
