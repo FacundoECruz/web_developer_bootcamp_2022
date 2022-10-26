@@ -102,7 +102,10 @@ app.post('/soccerfields/:id/reviews', validateReview, catchAsync(async (req, res
 }))
 
 app.delete('/soccerfields/:id/reviews/:reviewId', catchAsync(async (req, res) => {
-    res.send('BORRAAAAMEEEE')
+    const { id, reviewId } = req.params
+    await SoccerField.findByIdAndUpdate(id, { $pull: { reviews: reviewId }})
+    await Review.findByIdAndDelete(reviewId)
+    res.redirect(`/soccerfields/${id}`)
 }))
 
 app.all('*', (req, res, next) => {
