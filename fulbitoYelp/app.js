@@ -101,6 +101,10 @@ app.post('/soccerfields/:id/reviews', validateReview, catchAsync(async (req, res
     res.redirect(`/soccerfields/${soccerfield._id}`)
 }))
 
+app.delete('/soccerfields/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+    res.send('BORRAAAAMEEEE')
+}))
+
 app.all('*', (req, res, next) => {
     next(new ExpressError('Página no encontrada', 404))
 })
