@@ -71,7 +71,7 @@ app.post('/soccerfields', validateSoccerfield, catchAsync(async (req, res) => {
 }))
 
 app.get('/soccerfields/:id', catchAsync(async (req, res) => {
-    const soccerfield = await SoccerField.findById(req.params.id);
+    const soccerfield = await SoccerField.findById(req.params.id).populate('reviews');
     res.render('soccerfields/show', { soccerfield })
 }))
 

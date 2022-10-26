@@ -39,5 +39,11 @@
                 </div>
                 <button class="btn btn-success">Enviar</button>
             </form>
+            <% for(let review of soccerfield.reviews) {%>
+                <div class="mb-3">
+                    <p>Puntaje: <%= review.rating %> </p>
+                    <p>Comentario: <%= review.body %> </p>
+                </div> 
+            <% } %>         
         </div>
     </div>
