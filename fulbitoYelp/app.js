@@ -5,7 +5,7 @@ const SoccerField = require('./models/soccerField')
 const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
 const Joi = require('joi')
-const { soccerfieldSchema } = require('./schemas.js')
+const { soccerfieldSchema, reviewSchema } = require('./schemas.js')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
 const Review = require('./models/review')
@@ -32,6 +32,16 @@ app.use(methodOverride('_method'))
 
 const validateSoccerfield = (req, res, next) => {
     const { error } = soccerfieldSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',')
+        throw new ExpressError(msg, 400)
+    } else {
+        next();
+    }
+}
+
+const validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
         throw new ExpressError(msg, 400)
@@ -82,7 +92,7 @@ app.delete('/soccerfields/:id', catchAsync(async (req, res) => {
     res.redirect('/soccerfields')
 }))
 
-app.post('/soccerfields/:id/reviews', catchAsync(async (req, res) => {
+app.post('/soccerfields/:id/reviews', validateReview, catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id)
     const review = new Review(req.body.review)
     soccerfield.reviews.push(review)
