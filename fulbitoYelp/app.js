@@ -8,7 +8,7 @@ const Joi = require('joi')
 const { soccerfieldSchema } = require('./schemas.js')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
-const { rmSync } = require('fs')
+const Review = require('./models/review')
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
     useNewUrlParser: true,
@@ -83,7 +83,12 @@ app.delete('/soccerfields/:id', catchAsync(async (req, res) => {
 }))
 
 app.post('/soccerfields/:id/reviews', catchAsync(async (req, res) => {
-    res.send('ALTOKEPAI')
+    const soccerfield = await SoccerField.findById(req.params.id)
+    const review = new Review(req.body.review)
+    soccerfield.reviews.push(review)
+    await review.save()
+    await soccerfield.save()
+    res.redirect(`/soccerfields/${soccerfield._id}`)
 }))
 
 app.all('*', (req, res, next) => {
