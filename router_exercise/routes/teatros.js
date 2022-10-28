@@ -17,4 +17,4 @@ router.get('/teatros/:id/edit', (req, res) => {
     res.send('EDITAR UN TEATRO')
 })
 
-
+module.exports = router;
