@@ -6,7 +6,7 @@ const adminRoutes = require('./routes/admin')
 
 app.use('/teatros', teatrosRoutes);
 app.use('/cines', cinesRoutes);
-app.use('/admin', adminRoutes);
+app.use('/', adminRoutes);
 
 app.listen(3000, () => {
     console.log("LISTEN ON 3000")

@@ -12,7 +12,7 @@ router.get('/secret', (req, res) => {
     res.send('ESTO ES UN SECRETOOOOO!!!!')
 })
 
-router.post('/deleteall', (req, res) => {
+router.get('/deleteall', (req, res) => {
     res.send('BORRANDOOOO!!!')
 })
 
