@@ -19,7 +19,10 @@ app.get('/getsignedcookie', (req, res) => {
     res.send('Cookie firmada')
 })
 
-
+app.get('/verify', (req, res) => {
+    console.log(req.signedCookies);
+    res.send(req.signedCookies)
+})
 
 app.listen(3000, () => {
     console.log('LISTEN ON 3000')
