@@ -28,12 +28,13 @@ router.post('/', validateSoccerfield, catchAsync(async (req, res) => {
         // if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
         const soccerfield = new SoccerField(req.body.soccerfield);
         await soccerfield.save();
+        req.flash('success', 'Se creó una nueva cancha');
         res.redirect(`/soccerfields/${soccerfield._id}`)
 }))
 
 router.get('/:id', catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id).populate('reviews');
-    res.render('soccerfields/show', { soccerfield })
+    res.render('soccerfields/show', { soccerfield, msg: req.flash('success') })
 }))
 
 router.get('/:id/edit', catchAsync(async (req, res) => {

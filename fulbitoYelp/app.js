@@ -1,18 +1,15 @@
 const express = require('express')
 const path = require('path')
 const mongoose = require('mongoose')
-const SoccerField = require('./models/soccerField')
-const catchAsync = require('./utils/catchAsync')
 const ExpressError = require('./utils/ExpressError')
-const Joi = require('joi')
-const { soccerfieldSchema, reviewSchema } = require('./schemas.js')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
-const Review = require('./models/review')
 const soccerfields = require('./routes/soccerfields')
 const reviews = require('./routes/reviews')
 const session = require('express-session')
-const { date } = require('joi')
+const flash = require('connect-flash')
+
+
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
     useNewUrlParser: true,
@@ -46,6 +43,12 @@ const sessionConfig = {
     }
 }
 app.use(session(sessionConfig))
+app.use(flash());
+
+app.use((req, res, next) => {
+    res.locals.success = req.flash('success');
+    next();
+})
 
 app.use('/soccerfields', soccerfields)
 app.use('/soccerfields/:id/reviews', reviews)
