@@ -9,6 +9,7 @@ const { soccerfieldSchema, reviewSchema } = require('./schemas.js')
 const methodOverride = require('method-override')
 const engine = require('ejs-mate')
 const Review = require('./models/review')
+const soccerfields = require('./routes/soccerfields')
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
     useNewUrlParser: true,
@@ -30,16 +31,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-const validateSoccerfield = (req, res, next) => {
-    const { error } = soccerfieldSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
-    } else {
-        next();
-    }
-}
-
 const validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
     if (error) {
@@ -50,11 +41,11 @@ const validateReview = (req, res, next) => {
     }
 }
 
+app.use('/soccerfields', soccerfields)
+
 app.get('/', async (req, res) => {
     res.render('home')
 })
-
-
 
 app.post('/soccerfields/:id/reviews', validateReview, catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id)
