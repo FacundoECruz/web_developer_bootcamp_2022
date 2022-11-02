@@ -12,6 +12,7 @@ const Review = require('./models/review')
 const soccerfields = require('./routes/soccerfields')
 const reviews = require('./routes/reviews')
 const session = require('express-session')
+const { date } = require('joi')
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
     useNewUrlParser: true,
@@ -37,7 +38,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 const sessionConfig = {
     secret: 'palabraquedeberiasersecreta',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
 }
 app.use(session(sessionConfig))
 
