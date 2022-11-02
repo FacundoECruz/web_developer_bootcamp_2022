@@ -11,6 +11,7 @@ const engine = require('ejs-mate')
 const Review = require('./models/review')
 const soccerfields = require('./routes/soccerfields')
 const reviews = require('./routes/reviews')
+const session = require('express-session')
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
     useNewUrlParser: true,
@@ -32,6 +33,13 @@ app.set('views', path.join(__dirname, 'views'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 app.use(express.static(path.join(__dirname, 'public')))
+
+const sessionConfig = {
+    secret: 'palabraquedeberiasersecreta',
+    resave: false,
+    saveUninitialized: true
+}
+app.use(session(sessionConfig))
 
 app.use('/soccerfields', soccerfields)
 app.use('/soccerfields/:id/reviews', reviews)
