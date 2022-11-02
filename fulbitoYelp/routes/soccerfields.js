@@ -45,12 +45,14 @@ router.get('/:id/edit', catchAsync(async (req, res) => {
 router.put('/:id', validateSoccerfield, catchAsync(async (req, res) => {
     const { id } = req.params;
     const soccerfield = await SoccerField.findByIdAndUpdate(id, { ...req.body.soccerfield }, { new: true })
+    req.flash('success', 'Se actualizó la cancha');
     res.redirect(`/soccerfields/${soccerfield.id}`)
 }))
 
 router.delete('/:id', catchAsync(async (req, res) => {
     const { id } = req.params;
     await SoccerField.findByIdAndDelete(id)
+    req.flash('success', 'Se borró la cancha');
     res.redirect('/soccerfields')
 }))
 
