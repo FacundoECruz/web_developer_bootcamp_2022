@@ -34,7 +34,11 @@ router.post('/', validateSoccerfield, catchAsync(async (req, res) => {
 
 router.get('/:id', catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id).populate('reviews');
-    res.render('soccerfields/show', { soccerfield, msg: req.flash('success') })
+    if (!soccerfield) {
+        req.flash = ('error', 'No se encontró la cancha')
+        return res.redirect('/soccerfields')
+    }
+    res.render('soccerfields/show', { soccerfield })
 }))
 
 router.get('/:id/edit', catchAsync(async (req, res) => {
