@@ -1,10 +1,13 @@
 const express = require('express')
-const router = express.Router()
-const catchAsync = require('../utils/catchAsync')
-const ExpressError = require('../utils/ExpressError')
+const router = express.Router({mergeParams: true})
+
 const SoccerField = require('../models/soccerField')
+
 const Review = require('../models/review')
 const { reviewSchema } = require('../schemas.js')
+
+const catchAsync = require('../utils/catchAsync')
+const ExpressError = require('../utils/ExpressError')
 
 const validateReview = (req, res, next) => {
     const { error } = reviewSchema.validate(req.body);
@@ -16,7 +19,7 @@ const validateReview = (req, res, next) => {
     }
 }
 
-router.post('/soccerfields/:id/reviews', validateReview, catchAsync(async (req, res) => {
+router.post('/', validateReview, catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id)
     const review = new Review(req.body.review)
     soccerfield.reviews.push(review)
@@ -25,9 +28,11 @@ router.post('/soccerfields/:id/reviews', validateReview, catchAsync(async (req, 
     res.redirect(`/soccerfields/${soccerfield._id}`)
 }))
 
-router.delete('/soccerfields/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+router.delete('/:reviewId', catchAsync(async (req, res) => {
     const { id, reviewId } = req.params
     await SoccerField.findByIdAndUpdate(id, { $pull: { reviews: reviewId }})
     await Review.findByIdAndDelete(reviewId)
     res.redirect(`/soccerfields/${id}`)
 }))
+
+module.exports = router;
