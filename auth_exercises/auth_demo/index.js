@@ -43,6 +43,14 @@ app.post('/register', async (req, res) => {
     res.redirect('/')
 })
 
+app.get('/login', (req, res) => {
+    res.render('login')
+})
+
+app.post('/login', (req, res) => {
+    res.send(req.body)
+})
+
 app.listen(3000, () => {
     console.log('LISTENING ON 3000')
 })
