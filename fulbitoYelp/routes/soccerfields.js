@@ -17,7 +17,7 @@ const validateSoccerfield = (req, res, next) => {
 
 router.get('/', catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.find({});
-    res.render('soccerfields/index', { soccerfield });
+    res.render('soccerfields/index', { soccerfield } );
 }))
 
 router.get('/new', (req, res) => {
