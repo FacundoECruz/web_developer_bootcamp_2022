@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const { Schema } = mongoose;
 
-const blogSchema = new Schema({
+const userSchema = new Schema({
     username: {
         type: String,
         required: [true, 'Se requiere nombre de usuario']
@@ -11,3 +11,5 @@ const blogSchema = new Schema({
         required: [true, 'Se requiere contraseña']
     }
 })
+
+module.exprts = mongoose.model('User', userSchema);
