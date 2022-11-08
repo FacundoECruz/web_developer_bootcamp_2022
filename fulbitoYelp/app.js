@@ -62,6 +62,12 @@ app.use((req, res, next) => {
 app.use('/soccerfields', soccerfields)
 app.use('/soccerfields/:id/reviews', reviews)
 
+app.get('/fakeUser', async (req, res) => {
+    const user = new User({ email: 'lalala@gmail.com', username: 'Facu'})
+    const newUser = await User.register(user, 'tucu')
+    res.send(newUser)
+})
+
 app.get('/', async (req, res) => {
     res.render('home')
 })
