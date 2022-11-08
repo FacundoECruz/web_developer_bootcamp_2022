@@ -28,11 +28,16 @@ app.get('/', (req, res) => {
     res.send('This is the home page')
 })
 
+app.post('/logout', (req, res) => {
+    req.session.user_id = null;
+    res.redirect('/login')
+})
+
 app.get('/secret', (req, res) => {
     if(!req.session.user_id){
         res.redirect('/login')
     } else
-    res.send('This is a secret')
+    res.render('secret')
 })
 
 app.get('/register', (req, res) => {
