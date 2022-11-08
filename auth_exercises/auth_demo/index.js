@@ -31,7 +31,7 @@ app.get('/', (req, res) => {
 app.get('/secret', (req, res) => {
     if(!req.session.user_id){
         res.redirect('/login')
-    }
+    } else
     res.send('This is a secret')
 })
 
