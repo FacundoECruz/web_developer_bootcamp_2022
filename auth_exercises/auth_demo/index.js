@@ -24,6 +24,13 @@ app.use(express.urlencoded({ extended: true }));
 const sessionConfig = { secret: 'notagoodsecret', resave: false, saveUninitialized: true }
 app.use(session(sessionConfig))
 
+const requireLogin = (req, res, next) => {
+    if(!req.session.user_id){
+        return res.redirect('/login')
+    }
+    next();
+}
+
 app.get('/', (req, res) => {
     res.send('This is the home page')
 })
@@ -33,10 +40,7 @@ app.post('/logout', (req, res) => {
     res.redirect('/login')
 })
 
-app.get('/secret', (req, res) => {
-    if(!req.session.user_id){
-        res.redirect('/login')
-    } else
+app.get('/secret', requireLogin, (req, res) => {
     res.render('secret')
 })
 
