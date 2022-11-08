@@ -20,13 +20,18 @@ app.set('view engine', 'ejs')
 app.set('views', 'views')
 
 app.use(express.urlencoded({ extended: true }));
-app.use(session({ secret: 'notagoodsecret' }))
+
+const sessionConfig = { secret: 'notagoodsecret', resave: false, saveUninitialized: true }
+app.use(session(sessionConfig))
 
 app.get('/', (req, res) => {
     res.send('This is the home page')
 })
 
 app.get('/secret', (req, res) => {
+    if(!req.session.user_id){
+        res.redirect('/login')
+    }
     res.send('This is a secret')
 })
 
@@ -42,6 +47,7 @@ app.post('/register', async (req, res) => {
         password: hash 
     })
     await user.save();
+    req.session.user_id = user._id;
     res.redirect('/')
 })
 
@@ -54,6 +60,7 @@ app.post('/login',async (req, res) => {
     const user = await User.findOne({ username })
     const validPassword = await bcrypt.compare(password, user.password);
     if(validPassword){
+        req.session.user_id = user._id;
         res.send('Bien ahi!! Logueado!!!')
     } else {
         res.send('Mal ahi! Intenta de nuevo!')
