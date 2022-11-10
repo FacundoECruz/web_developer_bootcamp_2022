@@ -21,6 +21,10 @@ router.get('/', catchAsync(async (req, res) => {
 }))
 
 router.get('/new', (req, res) => {
+    if(!req.isAuthenticated()) {
+        req.flash('error', 'Tenes que registrarte para realizar esta acción')
+        res.redirect('/login')
+    }
     res.render('soccerfields/new')
 })
 
