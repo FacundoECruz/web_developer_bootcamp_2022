@@ -42,19 +42,19 @@ router.get('/:id', catchAsync(async (req, res) => {
     res.render('soccerfields/show', { soccerfield })
 }))
 
-router.get('/:id/edit', catchAsync(async (req, res) => {
+router.get('/:id/edit', isLoggedIn, catchAsync(async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id);
     res.render('soccerfields/edit', { soccerfield });
 }))
 
-router.put('/:id', validateSoccerfield, catchAsync(async (req, res) => {
+router.put('/:id', isLoggedIn, validateSoccerfield, catchAsync(async (req, res) => {
     const { id } = req.params;
     const soccerfield = await SoccerField.findByIdAndUpdate(id, { ...req.body.soccerfield }, { new: true })
     req.flash('success', 'Se actualizó la cancha');
     res.redirect(`/soccerfields/${soccerfield.id}`)
 }))
 
-router.delete('/:id', catchAsync(async (req, res) => {
+router.delete('/:id', isLoggedIn, catchAsync(async (req, res) => {
     const { id } = req.params;
     await SoccerField.findByIdAndDelete(id)
     req.flash('success', 'Se borró la cancha');
