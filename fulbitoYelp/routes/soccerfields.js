@@ -4,6 +4,7 @@ const catchAsync = require('../utils/catchAsync')
 const ExpressError = require('../utils/ExpressError')
 const SoccerField = require('../models/soccerField')
 const { soccerfieldSchema } = require('../schemas.js')
+const { isLoggedIn } = require('../middleware')
 
 const validateSoccerfield = (req, res, next) => {
     const { error } = soccerfieldSchema.validate(req.body);
@@ -20,15 +21,11 @@ router.get('/', catchAsync(async (req, res) => {
     res.render('soccerfields/index', { soccerfield } );
 }))
 
-router.get('/new', (req, res) => {
-    if(!req.isAuthenticated()) {
-        req.flash('error', 'Tenes que registrarte para realizar esta acción')
-        res.redirect('/login')
-    }
+router.get('/new', isLoggedIn, (req, res) => {
     res.render('soccerfields/new')
 })
 
-router.post('/', validateSoccerfield, catchAsync(async (req, res) => {
+router.post('/', isLoggedIn, validateSoccerfield, catchAsync(async (req, res) => {
         // if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
         const soccerfield = new SoccerField(req.body.soccerfield);
         await soccerfield.save();
