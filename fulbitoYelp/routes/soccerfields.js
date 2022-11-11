@@ -26,8 +26,8 @@ router.get('/new', isLoggedIn, (req, res) => {
 })
 
 router.post('/', isLoggedIn, validateSoccerfield, catchAsync(async (req, res) => {
-        // if(!req.body.soccerfield) throw new ExpressError('Información inválida', 400)
         const soccerfield = new SoccerField(req.body.soccerfield);
+        soccerfield.author = req.user._id;
         await soccerfield.save();
         req.flash('success', 'Se creó una nueva cancha');
         res.redirect(`/soccerfields/${soccerfield._id}`)
