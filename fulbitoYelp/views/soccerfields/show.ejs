@@ -20,12 +20,14 @@
                     </li>
                     <li class="list-group-item">$<%= soccerfield.price %>/hora</li>
                 </ul>
+                <% if (currentUser && soccerfield.author.equals(currentUser._id)) { %> 
                 <div class="card-body">
                     <a class="card-link btn btn-info" href="/soccerfields/<%= soccerfield._id %>/edit">Editar</a>
                     <form class="d-inline" action="/soccerfields/<%= soccerfield._id %>?_method=DELETE" method="POST">
                         <button class="btn btn-danger">Borrar</button>
                     </form>
                 </div>
+                <% } %> 
             </div>
         </div>
         <div class="col-6">
