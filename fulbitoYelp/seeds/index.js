@@ -23,7 +23,7 @@ for (let i = 0; i < 20; i++) {
     const random24 = Math.floor(Math.random() * 24);
     const price = Math.floor(Math.random() * 2000) + 10;
     const field = new SoccerField({
-        author: '636c002880d61d9aac034c2f',
+        author: '63729a04a77aebca759699cc',
         title: `${names[i]}`,
         location: `${cities[random24].nombre_completo}`,
         image: 'https://imgar.zonapropcdn.com/avisos/1/00/44/29/27/76/1200x1200/1724306414.jpg',
