@@ -1,6 +1,7 @@
 const { soccerfieldSchema, reviewSchema } = require('./schemas.js')  
 const ExpressError = require('./utils/ExpressError')
 const SoccerField = require('./models/soccerField')
+const Review = require('./models/review')
 
 module.exports.isLoggedIn = (req, res, next) => {
     if(!req.isAuthenticated()) {
@@ -24,6 +25,16 @@ module.exports.validateSoccerfield = (req, res, next) => {
 module.exports.isAuthor = async(req, res, next) => {
     const { id } = req.params;
     const soccerfield = await SoccerField.findById(id);
+    if(!soccerfield.author.equals(req.user._id)) {
+        req.flash('error', 'No tenés permiso para hacer esto');
+        return res.redirect(`/soccerfields/${id}`);
+    }
+    next();
+}
+
+module.exports.isReviewAuthor = async(req, res, next) => {
+    const { id, reviewId } = req.params;
+    const review = await Review.findById(id);
     if(!soccerfield.author.equals(req.user._id)) {
         req.flash('error', 'No tenés permiso para hacer esto');
         return res.redirect(`/soccerfields/${id}`);
