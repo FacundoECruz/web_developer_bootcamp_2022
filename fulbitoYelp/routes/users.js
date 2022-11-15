@@ -9,7 +9,7 @@ router.route('/register')
     .get(user.renderRegister)
     .post(catchAsync(user.register))
 
-router.route('login')
+router.route('/login')
     .get(user.renderLogin)
     .post(passport.authenticate('local' , { failureFlash: true, failureRedirect: '/login' }), user.login)
 
