@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router({mergeParams: true})
 const { validateReview, isLoggedIn, isReviewAuthor } = require('../middleware')
-const SoccerField = require('../models/soccerField')
 const Review = require('../models/review')
 const review = require('../controllers/reviews')
 
