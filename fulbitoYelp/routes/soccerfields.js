@@ -2,13 +2,11 @@ const express = require('express')
 const router = express.Router()
 const catchAsync = require('../utils/catchAsync')
 const ExpressError = require('../utils/ExpressError')
+const soccerfields = require('../controllers/soccerfields')
 const SoccerField = require('../models/soccerField')
 const { isLoggedIn, isAuthor, validateSoccerfield } = require('../middleware')
 
-router.get('/', catchAsync(async (req, res) => {
-    const soccerfield = await SoccerField.find({});
-    res.render('soccerfields/index', { soccerfield } );
-}))
+router.get('/', catchAsync(soccerfields.index))
 
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('soccerfields/new')
