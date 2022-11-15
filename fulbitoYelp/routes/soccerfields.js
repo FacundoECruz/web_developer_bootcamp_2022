@@ -8,54 +8,16 @@ const { isLoggedIn, isAuthor, validateSoccerfield } = require('../middleware')
 
 router.get('/', catchAsync(soccerfields.index))
 
-router.get('/new', isLoggedIn, (req, res) => {
-    res.render('soccerfields/new')
-})
+router.get('/new', isLoggedIn, soccerfields.renderNewForm)
 
-router.post('/', isLoggedIn, validateSoccerfield, catchAsync(async (req, res) => {
-        const soccerfield = new SoccerField(req.body.soccerfield);
-        soccerfield.author = req.user._id;
-        await soccerfield.save();
-        req.flash('success', 'Se creó una nueva cancha');
-        res.redirect(`/soccerfields/${soccerfield._id}`)
-}))
+router.post('/', isLoggedIn, validateSoccerfield, catchAsync(soccerfields.createSoccerfield))
 
-router.get('/:id', catchAsync(async (req, res) => {
-    const soccerfield = await SoccerField.findById(req.params.id).populate({
-        path: 'reviews',
-        populate: {
-            path: 'author'
-        }
-    }).populate('author');
-    if (!soccerfield) {
-        req.flash = ('error', 'No se encontró la cancha')
-        return res.redirect('/soccerfields')
-    }
-    res.render('soccerfields/show', { soccerfield })
-}))
+router.get('/:id', catchAsync(soccerfields.showSoccerfield))
 
-router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const soccerfield = await SoccerField.findById(id);
-    if (!soccerfield){
-        req.flash('error', 'No se encontró la cancha');
-        return res.redirect('/soccerfields')
-    }
-    res.render('soccerfields/edit', { soccerfield });
-}))
+router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(soccerfields.renderEditForm))
 
-router.put('/:id', isLoggedIn, isAuthor, validateSoccerfield, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    const soccerfield = await SoccerField.findByIdAndUpdate(id, { ...req.body.soccerfield }, { new: true })
-    req.flash('success', 'Se actualizó la cancha');
-    res.redirect(`/soccerfields/${soccerfield.id}`)
-}))
+router.put('/:id', isLoggedIn, isAuthor, validateSoccerfield, catchAsync(soccerfields.updateSoccerfield))
 
-router.delete('/:id', isLoggedIn, isAuthor, catchAsync(async (req, res) => {
-    const { id } = req.params;
-    await SoccerField.findByIdAndDelete(id)
-    req.flash('success', 'Se borró la cancha');
-    res.redirect('/soccerfields')
-}))
+router.delete('/:id', isLoggedIn, isAuthor, catchAsync(soccerfields.deleteSoccerfield))
 
 module.exports = router;
