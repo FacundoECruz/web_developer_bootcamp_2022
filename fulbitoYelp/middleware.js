@@ -34,7 +34,7 @@ module.exports.isAuthor = async(req, res, next) => {
 
 module.exports.isReviewAuthor = async(req, res, next) => {
     const { id, reviewId } = req.params;
-    const review = await Review.findById(id);
+    const review = await Review.findById(reviewId);
     if(!review.author.equals(req.user._id)) {
         req.flash('error', 'No tenés permiso para hacer esto');
         return res.redirect(`/soccerfields/${id}`);
