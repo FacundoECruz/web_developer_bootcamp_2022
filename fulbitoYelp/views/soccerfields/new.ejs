@@ -2,7 +2,7 @@
 <div class="row">
     <h1 class="text-center">Nueva Cancha</h1>
     <div class="col-6 offset-3">
-        <form action="/soccerfields" method="POST" novalidate class="validated-form">
+        <form action="/soccerfields" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
             <div class="mb-3">
                 <label class="form-label" for="title">Nombre</label>
                 <input class="form-control" id="title" type="text" name="soccerfield[title]" required>
@@ -17,13 +17,14 @@
                     Bien ahi!
                 </div>
             </div>
-            <div class="mb-3">
+            <input type="file" name="image">
+            <!-- <div class="mb-3">
                 <label class="form-label" for="image">Imagen</label>
                 <input class="form-control" id="image" type="text" name="soccerfield[image]" required>
                 <div class="valid-feedback">
                     Bien ahi!
                 </div>
-            </div>
+            </div> -->
             
             <div class="mb-3">
                 <label class="form-label" for="price">Precio</label>
