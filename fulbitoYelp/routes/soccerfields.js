@@ -10,11 +10,8 @@ const upload = multer({ storage })
 
 router.route('/')
     .get(catchAsync(soccerfields.index))
-    // .post(isLoggedIn, validateSoccerfield, catchAsync(soccerfields.createSoccerfield))
-    .post(upload.single('image'), (req, res) => {
-        console.log(req.body, req.file)
-        res.send("It worked!")
-    })
+    .post(isLoggedIn, upload.array('image'), validateSoccerfield, catchAsync(soccerfields.createSoccerfield))
+
 router.get('/new', isLoggedIn, soccerfields.renderNewForm)
 
 router.route('/:id')

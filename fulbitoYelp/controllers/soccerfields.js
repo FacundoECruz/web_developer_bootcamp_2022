@@ -11,8 +11,10 @@ module.exports.renderNewForm = (req, res) => {
 
 module.exports.createSoccerfield = async (req, res) => {
     const soccerfield = new SoccerField(req.body.soccerfield);
+    soccerfield.images = req.files.map(f => ({ url: f.path, filename: f.filename}))
     soccerfield.author = req.user._id;
     await soccerfield.save();
+    console.log(soccerfield)
     req.flash('success', 'Se creó una nueva cancha');
     res.redirect(`/soccerfields/${soccerfield._id}`)
 }
