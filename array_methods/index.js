@@ -25,6 +25,6 @@ const negociosCuadra = [
     }
 ]
 
-const nombresNegocios = negociosCuadra.map(n => n.nombre)
+const kioscos = negociosCuadra.filter(n => n.tags.includes('Kiosco'))
 
-console.log(nombresNegocios)
+console.log(kioscos)
