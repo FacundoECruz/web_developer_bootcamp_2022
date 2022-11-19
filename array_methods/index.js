@@ -28,7 +28,8 @@ const negociosCuadra = [
 const nombreCarnica = () => {
     const carnica = negociosCuadra.find(n => n.tags.includes('Carnes'))
     const nombreDeletreado = Array.from(carnica.nombre)
-    console.log(nombreDeletreado)    
+    const nombreUnido = nombreDeletreado.join('')
+    console.log(nombreUnido)    
 }
 
 nombreCarnica();
