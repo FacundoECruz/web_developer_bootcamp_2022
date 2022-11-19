@@ -25,6 +25,6 @@ const negociosCuadra = [
     }
 ]
 
-const buenosNegocios = negociosCuadra.flatMap(n => n.calif > 6 ? [n] : [])
+const negociosEmi = negociosCuadra.find(n => n.nombre.includes('Emi'))
 
-console.log(buenosNegocios)
+console.log(negociosEmi)
