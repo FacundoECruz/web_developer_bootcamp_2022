@@ -25,6 +25,6 @@ const negociosCuadra = [
     }
 ]
 
-const negociosEmi = negociosCuadra.find(n => n.nombre.includes('Emi'))
+const negocios = negociosCuadra.some(n => n.id === 4)
 
-console.log(negociosEmi)
+console.log(negocios)
