@@ -25,8 +25,10 @@ const negociosCuadra = [
     }
 ]
 
-const todosLosTags = negociosCuadra.reduce((allTags, negocio) => {
-    return Array.from(new Set([...allTags, ...negocio.tags]))
-}, [])
+const nombreCarnica = () => {
+    const carnica = negociosCuadra.find(n => n.tags.includes('Carnes'))
+    const nombreDeletreado = Array.from(carnica.nombre)
+    console.log(nombreDeletreado)    
+}
 
-console.log(todosLosTags)
+nombreCarnica();
