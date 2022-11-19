@@ -25,6 +25,6 @@ const negociosCuadra = [
     }
 ]
 
-const negocios = negociosCuadra.some(n => n.id === 4)
+const nombresNegocios = negociosCuadra.map(n => n.nombre)
 
-console.log(negocios)
+console.log(nombresNegocios)
