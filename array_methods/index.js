@@ -25,6 +25,8 @@ const negociosCuadra = [
     }
 ]
 
-const kioscos = negociosCuadra.filter(n => n.tags.includes('Kiosco'))
+const todosLosTags = negociosCuadra.reduce((allTags, negocio) => {
+    return Array.from(new Set([...allTags, ...negocio.tags]))
+}, [])
 
-console.log(kioscos)
+console.log(todosLosTags)
