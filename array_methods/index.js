@@ -25,3 +25,6 @@ const negociosCuadra = [
     }
 ]
 
+const buenosNegocios = negociosCuadra.flatMap(n => n.calif > 6 ? [n] : [])
+
+console.log(buenosNegocios)
