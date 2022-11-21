@@ -1,48 +1,58 @@
-<% layout('layouts/boilerplate') %> 
-<div class="row">
-    <h1 class="text-center">Nueva Cancha</h1>
-    <div class="col-6 offset-3">
-        <form action="/soccerfields" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
-            <div class="mb-3">
-                <label class="form-label" for="title">Nombre</label>
-                <input class="form-control" id="title" type="text" name="soccerfield[title]" required>
-                <div class="valid-feedback">
-                    Bien ahi!
+<% layout('layouts/boilerplate') %>
+    <div class="row">
+        <h1 class="text-center">Nueva Cancha</h1>
+        <div class="col-6 offset-3">
+            <form action="/soccerfields" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Nombre</label>
+                    <input class="form-control" id="title" type="text" name="soccerfield[title]" required>
+                    <div class="valid-feedback">
+                        Bien ahi!
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="location">Ubicación</label>
-                <input class="form-control" id="location" type="text" name="soccerfield[location]" required>
-                <div class="valid-feedback">
-                    Bien ahi!
+                <div class="mb-3">
+                    <label class="form-label" for="location">Ubicación</label>
+                    <input class="form-control" id="location" type="text" name="soccerfield[location]" required>
+                    <div class="valid-feedback">
+                        Bien ahi!
+                    </div>
                 </div>
-            </div>
-            <input type="file" name="image" multiple>
-            <!-- <div class="mb-3">
+                <!-- <div class="mb-3">
                 <label class="form-label" for="image">Imagen</label>
                 <input class="form-control" id="image" type="text" name="soccerfield[image]" required>
                 <div class="valid-feedback">
                     Bien ahi!
                 </div>
             </div> -->
-            
-            <div class="mb-3">
-                <label class="form-label" for="price">Precio</label>
-            <div class="input-group">
-                <span class="input-group-text" id="price-label">$</span>
-                <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="soccerfield[price]" required>
-              </div>
-            </div>
-            
-            <div class="mb-3">
-                <label class="form-label" for="description">Descripción</label>
-                <textarea class="form-control" id="description" type="text" name="soccerfield[description]" required></textarea>
-                <div class="valid-feedback">
-                    Bien ahi!
+
+                <div class="mb-3">
+                    <label class="form-label" for="price">Precio</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="soccerfield[price]" required>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3"><button class="btn btn-success">Agregar Cancha</button></div>
-        </form>
-        <a href="/soccerfields">Volver a inicio</a>    
+
+                <div class="mb-3">
+                    <label class="form-label" for="description">Descripción</label>
+                    <textarea class="form-control" id="description" type="text" name="soccerfield[description]"
+                        required></textarea>
+                    <div class="valid-feedback">
+                        Bien ahi!
+                    </div>
+                </div>
+                <div class="mb-3"> 
+                    <div class="form-file custom-file">
+                        <input type="file" class="form-file-input" name="image" multiple>
+                        <label class="form-file-label" for="image">
+                            <span class="form-file-text custom-file-label">Chose image(s)...</span>
+                            <span class="form-file-button">Browse</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="mb-3"><button class="btn btn-success">Agregar Cancha</button></div>
+            </form>
+            <a href="/soccerfields">Volver a inicio</a>
+        </div>
     </div>
-</div>
