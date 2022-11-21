@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
     <div class="row">
-        <h1 class="text-center">Nueva Cancha</h1>
+        <h1 class="text-center">Editar Cancha</h1>
         <div class="col-6 offset-3">
             <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST" novalidate
                 class="validated-form" enctype="multipart/form-data">
@@ -29,7 +29,6 @@
                             required>
                     </div>
                 </div>
-
                 <div class="mb-3">
                     <label class="form-label" for="description">Descripción</label>
                     <textarea class="form-control" id="description" type="text" name="soccerfield[description]"
@@ -49,6 +48,17 @@
                 </div>
                 <div class="mb-3"><button class="btn btn-info">Guardar cambios</button></div>
             </form>
+
+            <div class="mb-3">
+                <% soccerfield.images.forEach(function(img, i) { %>
+                    <img src="<%= img.url %>" class="img-thumbnail" alt="">
+                    <div class="form-check-inline">
+                        <input type="checkbox" name="deleteImages[]" value="<%= img.filename %>" id="image-<%= i %>">
+                    </div>       
+                    <label for="image-<%= i %>">Delete?</label> 
+                <% }) %>  
+            </div>
+
             <a href="/soccerfields">Volver a inicio</a>
         </div>
     </div>
