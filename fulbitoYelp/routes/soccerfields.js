@@ -16,7 +16,7 @@ router.get('/new', isLoggedIn, soccerfields.renderNewForm)
 
 router.route('/:id')
     .get(catchAsync(soccerfields.showSoccerfield))
-    .put(isLoggedIn, isAuthor, validateSoccerfield, catchAsync(soccerfields.updateSoccerfield))
+    .put(isLoggedIn, isAuthor, upload.array('image'), validateSoccerfield, catchAsync(soccerfields.updateSoccerfield))
     .delete(isLoggedIn, isAuthor, catchAsync(soccerfields.deleteSoccerfield))
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(soccerfields.renderEditForm))

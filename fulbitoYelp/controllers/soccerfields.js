@@ -45,6 +45,9 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateSoccerfield = async (req, res) => {
     const { id } = req.params;
     const soccerfield = await SoccerField.findByIdAndUpdate(id, { ...req.body.soccerfield }, { new: true })
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename}))
+    soccerfield.images.push(...imgs)
+    await soccerfield.save()
     req.flash('success', 'Se actualizó la cancha');
     res.redirect(`/soccerfields/${soccerfield.id}`)
 }

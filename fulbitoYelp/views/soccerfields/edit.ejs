@@ -2,7 +2,7 @@
     <div class="row">
         <h1 class="text-center">Nueva Cancha</h1>
         <div class="col-6 offset-3">
-            <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST" novalidate class="validated-form">
+            <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label" for="title">Nombre</label>
                     <input class="form-control" id="title" type="text" name="soccerfield[title]" value="<%= soccerfield.title %>" required>
@@ -18,12 +18,8 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Imagen</label>
-                    <input class="form-control" id="image" type="text" name="soccerfield[image]" value="<%= soccerfield.image %>" required>
-                    <div class="valid-feedback">
-                        Bien ahi!
-                    </div>
-                </div>
+                    <label class="form-label" for="image">Agregar Imagen</label>
+                    <input type="file" name="image" id="image" multiple>
                 
                 <div class="mb-3">
                     <label class="form-label" for="price">Precio</label>
