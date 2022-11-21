@@ -26,9 +26,22 @@ for (let i = 0; i < 20; i++) {
         author: '6374047231e3883648513cf5',
         title: `${names[i]}`,
         location: `${cities[random24].nombre_completo}`,
-        image: 'https://imgar.zonapropcdn.com/avisos/1/00/44/29/27/76/1200x1200/1724306414.jpg',
         description: 'Cancha de futbol 5 para disfrutar con amigues, despues te escabias y te jugas un altisima, en breve el anotador online.',
-        price
+        price,
+        images: [
+            {
+                url: 'https://res.cloudinary.com/dfknsvqer/image/upload/v1669029780/YelpSoccer/oiny4nlw2r4kpqw585uu.jpg',
+                filename: 'YelpSoccer/oiny4nlw2r4kpqw585uu',
+            },
+            {
+                url: 'https://res.cloudinary.com/dfknsvqer/image/upload/v1669029819/YelpSoccer/fs1ydrzqymvcmd3mb3hy.jpg',
+                filename: 'YelpSoccer/fs1ydrzqymvcmd3mb3hy',
+            },
+            {
+                url: 'https://res.cloudinary.com/dfknsvqer/image/upload/v1669029851/YelpSoccer/pdy2sz0xwrdxbgmb3hir.jpg',
+                filename: 'YelpSoccer/pdy2sz0xwrdxbgmb3hir',
+            }
+        ]
     })
     field.save()
         .then(field => {

@@ -25,7 +25,6 @@ module.exports.showSoccerfield = async (req, res) => {
             path: 'author'
         }
     }).populate('author');
-    console.log(soccerfield.reviews)
     if (!soccerfield) {
         req.flash = ('error', 'No se encontró la cancha')
         return res.redirect('/soccerfields')
