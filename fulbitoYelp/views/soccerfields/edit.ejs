@@ -1,43 +1,54 @@
-<% layout('layouts/boilerplate') %> 
+<% layout('layouts/boilerplate') %>
     <div class="row">
         <h1 class="text-center">Nueva Cancha</h1>
         <div class="col-6 offset-3">
-            <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST" novalidate class="validated-form" enctype="multipart/form-data">
+            <form action="/soccerfields/<%= soccerfield._id %>?_method=PUT" method="POST" novalidate
+                class="validated-form" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label" for="title">Nombre</label>
-                    <input class="form-control" id="title" type="text" name="soccerfield[title]" value="<%= soccerfield.title %>" required>
+                    <input class="form-control" id="title" type="text" name="soccerfield[title]"
+                        value="<%= soccerfield.title %>" required>
                     <div class="valid-feedback">
                         Bien ahi!
                     </div>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="location">Ubicación</label>
-                    <input class="form-control" id="location" type="text" name="soccerfield[location]" value="<%= soccerfield.location %>" required>
+                    <input class="form-control" id="location" type="text" name="soccerfield[location]"
+                        value="<%= soccerfield.location %>" required>
                     <div class="valid-feedback">
                         Bien ahi!
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Agregar Imagen</label>
-                    <input type="file" name="image" id="image" multiple>
-                
-                <div class="mb-3">
                     <label class="form-label" for="price">Precio</label>
-                <div class="input-group">
-                    <span class="input-group-text" id="price-label">$</span>
-                    <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="soccerfield[price]" value="<%= soccerfield.price %>" required>
-                  </div>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="soccerfield[price]" value="<%= soccerfield.price %>"
+                            required>
+                    </div>
                 </div>
-                
+
                 <div class="mb-3">
                     <label class="form-label" for="description">Descripción</label>
-                    <textarea class="form-control" id="description" type="text" name="soccerfield[description]" required><%= soccerfield.description %> </textarea>
+                    <textarea class="form-control" id="description" type="text" name="soccerfield[description]"
+                        required><%= soccerfield.description %> </textarea>
                     <div class="valid-feedback">
                         Bien ahi!
+                    </div>
+                </div>
+                <div class="mb-3"> 
+                    <div class="form-file custom-file">
+                        <input type="file" class="form-file-input" name="image" multiple>
+                        <label class="form-file-label" for="image">
+                            <span class="form-file-text custom-file-label">Chose image(s)...</span>
+                            <span class="form-file-button">Browse</span>
+                        </label>
                     </div>
                 </div>
                 <div class="mb-3"><button class="btn btn-info">Guardar cambios</button></div>
             </form>
-            <a href="/soccerfields">Volver a inicio</a>    
+            <a href="/soccerfields">Volver a inicio</a>
         </div>
     </div>
