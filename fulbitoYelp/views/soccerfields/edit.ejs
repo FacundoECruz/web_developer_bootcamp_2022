@@ -46,18 +46,17 @@
                         </label>
                     </div>
                 </div>
+                <div class="mb-3">
+                    <% soccerfield.images.forEach(function(img, i) { %>
+                        <img src="<%= img.url %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image-<%= i %>" name="deleteImages[]" value="<%=img.filename%>">
+                        </div>       
+                        <label for="image-<%= i %>">Delete?</label> 
+                    <% }) %>  
+                </div>
                 <div class="mb-3"><button class="btn btn-info">Guardar cambios</button></div>
             </form>
-
-            <div class="mb-3">
-                <% soccerfield.images.forEach(function(img, i) { %>
-                    <img src="<%= img.url %>" class="img-thumbnail" alt="">
-                    <div class="form-check-inline">
-                        <input type="checkbox" name="deleteImages[]" value="<%= img.filename %>" id="image-<%= i %>">
-                    </div>       
-                    <label for="image-<%= i %>">Delete?</label> 
-                <% }) %>  
-            </div>
 
             <a href="/soccerfields">Volver a inicio</a>
         </div>
