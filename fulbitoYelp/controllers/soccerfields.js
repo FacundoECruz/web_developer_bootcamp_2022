@@ -19,14 +19,14 @@ module.exports.createSoccerfield = async (req, res) => {
         query: req.body.soccerfield.location,
         limit: 1
     }).send()
-    console.log(geoData.body.features[0].geometry.coordinates)
-    res.send('OK!!!!')
-    // const soccerfield = new SoccerField(req.body.soccerfield);
-    // soccerfield.images = req.files.map(f => ({ url: f.path, filename: f.filename}))
-    // soccerfield.author = req.user._id;
-    // await soccerfield.save();
-    // req.flash('success', 'Se creó una nueva cancha');
-    // res.redirect(`/soccerfields/${soccerfield._id}`)
+    const soccerfield = new SoccerField(req.body.soccerfield);
+    soccerfield.geometry = geoData.body.features[0].geometry;
+    soccerfield.images = req.files.map(f => ({ url: f.path, filename: f.filename}))
+    soccerfield.author = req.user._id;
+    await soccerfield.save();
+    console.log(soccerfield)
+    req.flash('success', 'Se creó una nueva cancha');
+    res.redirect(`/soccerfields/${soccerfield._id}`)
 }
 
 module.exports.showSoccerfield = async (req, res) => {
