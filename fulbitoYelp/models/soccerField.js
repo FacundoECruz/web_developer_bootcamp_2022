@@ -40,7 +40,7 @@ const SoccerFieldSchema = new Schema({
 { collection: 'soccerfields' })
 
 SoccerFieldSchema.virtual('properties.popUpMarkup').get(function () {
-    return `<a href="/soccerfields/${this.id}">${this.title}</a>`
+    return `<strong><a href="/soccerfields/${this.id}">${this.title}</a><strong>`
 })
 
 SoccerFieldSchema.post('findOneAndDelete', async function (doc) {
