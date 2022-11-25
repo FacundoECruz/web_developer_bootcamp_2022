@@ -19,7 +19,7 @@ db.once("open", () => {
 })
 
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < 25; i++) {
     const random24 = Math.floor(Math.random() * 24);
     const price = Math.floor(Math.random() * 2000) + 10;
     const field = new SoccerField({
