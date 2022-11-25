@@ -1,1 +1,5 @@
 .env
+.notas.swp
+notas
+notas.save
+.gitignore
