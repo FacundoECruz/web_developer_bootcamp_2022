@@ -6,8 +6,8 @@ const map = new mapboxgl.Map({
     zoom: 9, // starting zoom
 });
 
-new mapboxgl.Marker()
-    .setLngLat([soccerfield.geometry.coordinates])
+const marker = new mapboxgl.Marker()
+    .setLngLat(soccerfield.geometry.coordinates)
     .setPopup(
         new mapboxgl.Popup({ offset: 25 })
             .setHTML(
