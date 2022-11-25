@@ -2,6 +2,8 @@ const mongoose = require('mongoose')
 const Review = require('./review')
 const Schema = mongoose.Schema
 
+const opts = { toJSON: { virtuals: true } };
+
 const SoccerFieldSchema = new Schema({
     title: String,
     location: String,
@@ -34,8 +36,12 @@ const SoccerFieldSchema = new Schema({
             ref: 'Review'
         }
     ]
-},
+}, opts, 
 { collection: 'soccerfields' })
+
+SoccerFieldSchema.virtual('properties.popUpMarkup').get(function () {
+    return `<a href="/soccerfields/${this.id}">${this.title}</a>`
+})
 
 SoccerFieldSchema.post('findOneAndDelete', async function (doc) {
     if (doc) {
