@@ -25,14 +25,14 @@ for (let i = 0; i < 20; i++) {
     const field = new SoccerField({
         author: '6374047231e3883648513cf5',
         title: `${names[i]}`,
-        location: `${cities[random24]}`,
+        location: `${cities[random24].city}, ${cities[random24].state}`,
         description: 'Cancha de futbol 5 para disfrutar con amigues, despues te escabias y te jugas un altisima, en breve el anotador online.',
         price,
         geometry: {
             type: "Point",
             coordinates: [
-                -71.3067978,
-                -41.1680927
+                cities[random24].longitude,
+                cities[random24].latitude
             ]
         },
         images: [
