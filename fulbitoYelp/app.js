@@ -16,6 +16,9 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./models/user')
 const userRoutes = require('./routes/users')
+const helmet = require('helmet');
+
+
 const mongoSanitize = require('express-mongo-sanitize')
 
 mongoose.connect('mongodb://localhost:27017/YelpSoccer', {
@@ -53,6 +56,7 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 app.use(flash());
+// app.use(helmet({ contentSecurityPolicy: false }));
 
 app.use(passport.initialize())
 app.use(passport.session())
