@@ -243,3 +243,74 @@ Cada vez que diga earthquakes en source, hay que poner soccerfield.d
 
 Mapbox va a buscar un objeto properties, ademas del de geometry.
 
+*****************************
+*****************************
+
+SECCION 58 - COMMON SECURITY ISSUES
+
+566. Mongo Injection
+
+Este es un tema enorme, hay equipos completos dedicados a la seguridad.
+No vamos a ser expertos en seguridad, solo vamos a abordar de forma basica los problemas mas comunes.
+SQL (o noSQL) inyection: basicamente se refiere a escribir un db Query, que se usa como parte del input del usuario.
+En mongo tambien existe la inyeccion. Por ejemplo:
+
+db.user.find({username: req.body.username});
+
+db.users.find({username: {"gt": ""});
+
+el chabon pone como nombre de usuario un operador de mongo, entonces cuando corre hace aparecer todos los nombres de usuario.
+En principio lo que vamos a querer es que los usuarios no puedan usar los simbolos que componen los operadores.
+
+mongoSanitize: 
+elimina cualquier clave que contenga caracteres prohibidos.
+
+npm i express-mongo-sanitize
+include & app.use
+
+En lugar de borrarlo completamente tambien le podemos pedir que reemplace el texto.
+con app.use(mongoSanitize({replaceWith: '_'}))
+
+567. Cross site scripting (XSS)
+
+La idea es insertar un script del lado del cliente en la pagina web de alguien.
+Some atacker inyects his own client side code, sus propios scripts que se ejecutaran en el navegador, en la app de otra persona.
+Cuando alguien intenta meter sus propios scripts en nuestra app.
+Es un tipo de ataque muy frecuente.
+
+XSS game, pa entender mejor de que va esto.
+
+**Cuando vos le pones un src= el navegador va a enviar un request.
+
+****************************
+****************************
+
+568. Sanitizing HTML with JOI
+
+Dado que usamos ejs el navegador no trata a lo que resulta de los inputs de los usuarios
+(por ejemplo el nombre o la ubicacion de una cancha) como html.
+Salvo la descripcion del pin del mapa.
+Por el momento, si en el nombre de la cancha ponemos un script, el script se va a ejecutar y eso no es bueno.
+
+Joi nos permite crear extensiones y estas extensiones nos permiten definir cosas.
+por ejemplo: .htmlSafe()
+Aunque puedo definir mis propios metodos que joi va a usar en sus validaciones.
+
+npm i sanitize-html
+
+570. Hidding Errors
+
+No queremos que el usuario vea el stack trace.
+Usamos el if de "production" para mostrar o no el stack trace.
+**********************
+**********************
+571. Using Helmet
+
+Tiene 11 middlewares que tienen que ver con los headers.
+Manipulatin headers, todo en el nombre de la seguridad.
+
+npm i helmet
+require, and app.use
+
+En la standar express stack se usa una banda esto.
+
