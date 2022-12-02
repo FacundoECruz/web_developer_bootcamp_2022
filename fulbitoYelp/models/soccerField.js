@@ -4,15 +4,19 @@ const Schema = mongoose.Schema
 
 const opts = { toJSON: { virtuals: true } };
 
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+ImageSchema.virtual('thumbnail').get(function () {
+    return this.url.replace('/upload', '/upload/w_200');
+});
+
 const SoccerFieldSchema = new Schema({
     title: String,
     location: String,
-    images: [
-        {
-            url: String,
-            filename: String
-        }
-    ], 
+    images: [ImageSchema], 
     geometry: {
         type: {
           type: String, 
