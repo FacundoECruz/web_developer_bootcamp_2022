@@ -98,6 +98,7 @@ app.use(
                 "blob:",
                 "data:",
                 "https://www.clarin.com/",
+                "https://imagenes.elpais.com/",
                 "https://images.unsplash.com/",
                 "https://res.cloudinary.com/dfknsvqer/",
             ],
