@@ -97,6 +97,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
+                "https://www.clarin.com/",
                 "https://images.unsplash.com/",
                 "https://res.cloudinary.com/dfknsvqer/",
             ],
