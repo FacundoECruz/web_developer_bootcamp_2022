@@ -5,9 +5,9 @@ module.exports.createReview = async (req, res) => {
     const soccerfield = await SoccerField.findById(req.params.id)
     const review = new Review(req.body.review)
     review.author = req.user._id;
-    soccerfield.reviews.push(review)
+    soccerfield.reviews.unshift(review)
     await review.save()
-    await soccerfield.save()
+   await soccerfield.save()
     req.flash('success', 'Se agregó el comentario');
     res.redirect(`/soccerfields/${soccerfield._id}`)
 }

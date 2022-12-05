@@ -1,0 +1,345 @@
+SECCION 55 - ADDING MAPS
+
+546. Geocoding Our Locations
+Vamos a trabajar en el proceso de geolocalizacion. Cuando se envia un form pa crear un nuevo recurso. Cuando especifico ubicacion, vamos a tomar ese texto. Vamos a obtener eso e intentar sacar latitud y longitud.
+Lo vamos a hacer a traves de la API de geolocalizacion de Mapbox. Hay muchas api que te ayudan con geolocalizacion. 
+
+docs>geocoding...
+se puede poner un string y te devuelve coordenadas y tambien alreves.
+Podemos hacer nuestro propio rquest manualmente, ya que es un endpoint (una url), pero no vamos a hacer eso.
+POQUE MAPBOX tiene un Node client, called mapbox-sdk.
+
+npm i @mapbox/mapbox-sdk
+
+En el repositorio de github, si vas a fulldocs hay una banda de cosas. Buscamos forward geocoding. Tenemos que hacer el client y despues llamamos a forwardGeocode(), que toma un query, por ejemplo 'Paris, France', despues especificamos cuantos resultados queremos recuperar, despues .send() 
+esto lo podemos hacer await y despues nos da la respuesta.
+
+En el controler de soccerfields: 
+
+const mbxGeocoding = require("@mapbox/mapbox-sdk/services/geocoding");
+
+hay muchos servicios y podes requerir el que necesites.
+Despues necesitamos pasar el token.
+
+const mapBoxToken = process.env.MAPBOX_TOKEN;
+const geocoder = mbxGeocoding({ accessToken: mapBoxToken })
+
+Este geocoder va a tener los dos metodos que queremos: forward and reverse geocode.
+En realidad necesitamos mas el forward.
+
+En createSoccerfield: arriba de todo
+const geoData = await geocoder.forwardGeocode({
+	query: 'Yosemite, CA',
+	limit: 1
+}.send()
+console.log(geoData);
+res.send('OK!!)
+
+*El chabon comenta el resto del endpoint.
+Imprime en consola un objeto re grande. Despues dice que lo que vamos a necesitar es:
+
+geoData.body.features
+
+Nos da un array con un elemento porque pusimos el limite de 1, podrian ser mas.
+De todas las propiedades que tiene queremos geometry:, ya que tiene las coordenadas.
+
+geoData.body.features[0].geometry.coordinates
+
+Nos da unas cordenadas, si lo pegamos en google nos da error. Nos da la latitud primero y la longitud despues.
+En el query de nuestra funcion tenemos que cambiar el valor que pusimos por:
+
+req.body.soccerfield.location,
+
+El chabon crea un soccerfield, le pone una ubicacion y se fija si funciona poniendo las coordenadas que te devuelve en google (las invierte antes porque la funcion te los da alreves)
+
+**************************************************
+**************************************************
+
+547. Working With GeoJSON
+
+Lo que tenemos que hacer ahora es almacenar esta info p obterner la latitud y longitud.
+el punto de coordenadas de Mapbox y almacenarlo en nustro soccerfield model.
+Si imprimimos hasta geometry nos da un geoJSON.
+El formato es un type field que siempre va a tener "Point" (esto viene asi de Mapbox, pero geoJSON es mucho mas grande que mapbox, asi como JSON es mas grande que una Api).
+El segundo campo es coordinates. Vamos a almacenar el geoJSON completo.
+
+La forma en que lo vamos a meter en el soccerfield model es algo asi como:
+
+geometry: {
+	"type":"Point", "coordinates":[-1923498,1234565]}
+
+type va a ser un string y tiene que ser "Point" y coordinates es un array de 2 numbers.
+Esto aparece asi en los docs de mongoose. Mongo soporta mucha de las funcionalidades de geoJSON.
+
+el loco copia de los docs de mongoose y cambia 'location' por 'geometry'.
+En point podrian entrar mas opciones, que serian las que coincidan con la string, pero solo vanos a pedir uno.
+en createCampground:
+vamos a guardar geoData.body.features[0].geometry en nuestro soccerfield.
+abajo de new Soccerfield:
+
+soccerfield.geometry = geoData.body.features[0].geometry
+ 
+casi al final del endpoint pone un console.log con el soccerfield pa ver que onda.
+
+*************************************
+*************************************
+
+548. Displaying a Map
+
+Vamos a mostrar un map en la show page, que tendra un pin que seniale la ubicacion del soccerfield.
+Para mpezar empecemos con que cualquier mapa se muestre en cualquier lado.
+La parte de mapbox que usaremos se denomina Mapbox GL JS. Que es la herramienta que usamos para render interactive maps.
+Hay que copiar los links. Los de arriba en el boilerplate, en el head. 
+En show page: arriba del carrusel pone solo la primera linea del div (de los links de abajo)
+Lo siguiente que tenemos que hacer es decirle a mapbox "pone ese mapa en ese div" y le vamos a dar algunas opciones,
+como pueden ser container, style, center, zoom. El loco copia todo y lo pega en un script al final de show.ejs.
+Poner el access token '<%-process.env.MAPBOX_TOKEN%>'
+
+Cuando actualiza la pagina tiene el map ahi.
+
+public>javascripts>showPageMap.js
+el loco corta el script de la show page y lo pega ahi sin los tags.
+En la show page, al final: 
+
+<script src="/javascripts/showPageMap.js"></script>
+
+y arriba del div principal va a hacer un script para poder acceder al token, ya que al mover el script a un js ya no podemos usar un ejs sintax
+
+<script>
+	const mapToken = '<%-process.env.MAPBOX_TOKEN%>';
+</script>
+
+En showPageMap.js: en lugar del ejs pone mapToken;
+En show page corta el script de arriba y lo pega abajo (arriba del otro)
+
+*****************************************
+****************************************
+
+549. Centering The Map On A Soccerfield
+
+Como podemos agregar un marker al map. 
+En Mapbox GL docs, examples: util. Hay codigo donde te indica como crear un new mapboxgl.Marker()
+Despues le pasas una latitud y longitud tal como te lo da el geoJSON, ya que esta pensado para poner primero el eje x.
+Y despues addTo(map)
+
+En showPageMap.js: abajo:
+
+new mapboxgl.Marker()
+	.setLngLat([la ubicacion que tiene arriba en center])
+	.addTo(map)
+
+En los docs te dice como cambiar el stylo del marker si queres.
+Ahora vamosa querer centrar este mapa en la ubicacion real y ponerle un marcador.
+Va a ser un proceso parecido al que tuvimos con el map token, hay que crear una variable js, para tener acceso en showPageMap.js
+abajo de la const del mapToken, adentro del script:
+
+const soccerfield = <%- JSON.stringify(soccerfield) %>
+
+Ahora en showPageMap.js tenemos acceso al soccerfield. Entonces:
+
+center: soccerfield.geometry.coordinates,
+
+lo mismo en .setLngLat()
+
+Deberia aparecer el mapa en el lugar correspondiente y con un marcador.
+El loco crea un nuevo soccerfield pa ver que onda. We are no handling errors.
+
+***********************************
+***********************************
+
+550. Fixing Our Seeds Bug
+Vamos a agregar un default image source.
+En el index de soccerfields: abajo de col-md-4:
+
+<%if(soccerfield.images.length) {%>
+<img class="img-fluid" alt="" src="<%=soccerfield.images[0].url%>">
+<% }else {%>
+<img class="img-fluid" alt="" src="pegar aca la url de alguna img que tengamos en cloudinary"
+<% } %>
+
+Si hay algo en el array de imagenes, vamos a display la primera. Podriamos usar el operador ternario tambien.
+Podriamos tambien no permitir enviar el "new" form si no hay una image y lo mismo para el edit.
+
+El chabon copia la geometry de una de las soccer qube hay en la dB, va al index del seeds y agrega el campo 
+geometry y lo pega ahi. Reseed database. All soccer deberian tener el mismo geolocation.
+
+************************************
+*************************************
+
+551. Customizing Map Popup
+
+Podemos agregar un popup cuando clickeamos en el marker. 
+Docs de mapbox gl js>Markers and controls>popup>example 
+En showPageMap.js, abajo de setLngLat:
+
+.setPopup(
+	new mapboxgl.Popup({ offset: 25 })
+		.setHTML(
+			`<h3>${soccerfield.title}</h3><p>${soccerfield.location}</p>`
+		)
+)
+
+****************************************
+****************************************
+******************************************
+********************************************
+
+SECCION 56 - FANCY CLUSTER MAP 
+
+552. Intro To Our Cluster Map
+
+Map que muestra clusters de pins, a medida que acercamos se van dividiendo hasta que finalmente tenemos
+los individual soccerfields. Puedo clickear ahi e ir a la show page.
+
+**********************************************
+***********************************************
+
+553. Adding Earthquake Cluster Map
+
+En el index.ejs abajo del boilerplate:
+
+<div id="map" style="width: 100%; height: 500px"></div> (no queremos esto inline pero por el momento lo vamo a dejar asi)
+
+No va a aparecer el mapa pero si el espacio.
+El loco copia todo lo que hay en la pagina de mapbox, sin los tags y los pone en un archivo clusterMap.js
+en la carpeta de js's en public.
+Incluir el script al final del index.js
+
+<script src="/javascripts/clusterMap.js></script>
+
+Tendria que aparecer el map con la data de los terremotos.
+Copiar de showpage el script que tiene el mapToken (sin el soccerfield) y pegarlo arriba del script que 
+acabamos de hacer. Despues en clusterMap.js poner el mapToken.
+
+******************************************
+*****************************************
+554. Reseeding our database (again)
+
+all soccerfields have the same geometry.
+(Tuvimos que rehacer el archivo cities como para meterle latitud y longitud a los objetos que se corresponden
+con cada ubicacion)
+En el index de seeds pone coordinates: [
+				cities[random1000].longitude,
+				cities[random1000].latitude
+
+El mapita en cada showpage deberia mostrar la ubicacion que dice el string
+
+**********************************
+**********************************
+
+555. Basic Clustering Soccerfields
+
+Podemos meter un console.log en cada funcion para ver que hace cada una.
+
+***********************************
+***********************************
+
+556.
+
+Seguimos en el clusterMap.js
+en map.addSourde('soccerfield', ...
+
+Cada vez que diga earthquakes en source, hay que poner soccerfield.d
+
+Mapbox va a buscar un objeto properties, ademas del de geometry.
+
+*****************************
+*****************************
+
+SECCION 58 - COMMON SECURITY ISSUES
+
+566. Mongo Injection
+
+Este es un tema enorme, hay equipos completos dedicados a la seguridad.
+No vamos a ser expertos en seguridad, solo vamos a abordar de forma basica los problemas mas comunes.
+SQL (o noSQL) inyection: basicamente se refiere a escribir un db Query, que se usa como parte del input del usuario.
+En mongo tambien existe la inyeccion. Por ejemplo:
+
+db.user.find({username: req.body.username});
+
+db.users.find({username: {"gt": ""});
+
+el chabon pone como nombre de usuario un operador de mongo, entonces cuando corre hace aparecer todos los nombres de usuario.
+En principio lo que vamos a querer es que los usuarios no puedan usar los simbolos que componen los operadores.
+
+mongoSanitize: 
+elimina cualquier clave que contenga caracteres prohibidos.
+
+npm i express-mongo-sanitize
+include & app.use
+
+En lugar de borrarlo completamente tambien le podemos pedir que reemplace el texto.
+con app.use(mongoSanitize({replaceWith: '_'}))
+
+567. Cross site scripting (XSS)
+
+La idea es insertar un script del lado del cliente en la pagina web de alguien.
+Some atacker inyects his own client side code, sus propios scripts que se ejecutaran en el navegador, en la app de otra persona.
+Cuando alguien intenta meter sus propios scripts en nuestra app.
+Es un tipo de ataque muy frecuente.
+
+XSS game, pa entender mejor de que va esto.
+
+**Cuando vos le pones un src= el navegador va a enviar un request.
+
+****************************
+****************************
+
+568. Sanitizing HTML with JOI
+
+Dado que usamos ejs el navegador no trata a lo que resulta de los inputs de los usuarios
+(por ejemplo el nombre o la ubicacion de una cancha) como html.
+Salvo la descripcion del pin del mapa.
+Por el momento, si en el nombre de la cancha ponemos un script, el script se va a ejecutar y eso no es bueno.
+
+Joi nos permite crear extensiones y estas extensiones nos permiten definir cosas.
+por ejemplo: .htmlSafe()
+Aunque puedo definir mis propios metodos que joi va a usar en sus validaciones.
+
+npm i sanitize-html
+
+570. Hidding Errors
+
+No queremos que el usuario vea el stack trace.
+Usamos el if de "production" para mostrar o no el stack trace.
+**********************
+**********************
+571. Using Helmet
+
+Tiene 11 middlewares que tienen que ver con los headers.
+Manipulatin headers, todo en el nombre de la seguridad.
+
+npm i helmet
+require, and app.use
+
+En la standar express stack se usa una banda esto.
+
+****************************
+****************************
+
+SECCION 59 - DEPLOYING
+
+573. Setting up mongo atlas
+
+When we deploy an app is no longer run on this machine. 
+Instead is running on a server somewhere(Heroku, AWS)
+Someone is using data on their own infrastructure.
+Usually hosted by someone else.
+
+Mi base de datos esta aca, en esta maquina. Voy a tener que encontrar la manera
+de servir mi base de datos en internet, vamos a usar Heroku. No es tan facil todo este proceso.
+
+Necesitamos una separacion: UNA BASE DE DATOS EN DEVELOPE, OTRA EN PRODUCCION.
+Asi podemos seguir manipulando la cuestion sin que esto afecte la data de los
+usuarios.
+
+We're going to set up a production database, que no va a estar store local.
+ATLAS
+Which is one of mongo's cloud database services.
+Pay product con un free tier.
+Global cloud database service.
+New database that we dont actually store on our machines, it's stored in the cloud.
+And then we can connect to it very izi. Well relatively izi.
+Facil de usar los permisos (username, password)
+
+
