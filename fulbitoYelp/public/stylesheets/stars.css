@@ -193,3 +193,8 @@ img {
   width: 300px;
   height: 300px;
 }
+
+.slide-button {
+  border: 0;
+  padding: 0;
+}
