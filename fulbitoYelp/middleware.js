@@ -16,7 +16,9 @@ module.exports.validateSoccerfield = (req, res, next) => {
     const { error } = soccerfieldSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(',')
-        throw new ExpressError(msg, 400)
+        // throw new ExpressError(msg, 400)
+        req.flash('error', `${msg}`)
+        res.redirect('/soccerfields/new')
     } else {
         next();
     }
