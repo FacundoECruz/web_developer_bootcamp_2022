@@ -143,7 +143,10 @@ app.all('*', (req, res, next) => {
 app.use((err, req, res, next) => {
     const { statusCode = 500} = err;
     if(!err.message) err.message = 'Algo malio sal'
-    res.status(statusCode).render('error', { err });
+    // res.status(statusCode).render('error', { err });
+    req.flash('error', `${err.message}`)
+    res.redirect('back');
+    console.error(err)
 })
 
 app.listen(3000, () => {
