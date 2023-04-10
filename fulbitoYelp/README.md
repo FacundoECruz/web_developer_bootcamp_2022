@@ -5,7 +5,7 @@ This web app is a Yelp-style platform that allows users to read and review diffe
 Users can create an account and log in to the platform
 Once logged in, users can perform CRUD operations on soccer fields and reviews
 Users can view and leave reviews
-##Technologies Used
+## Technologies Used
 HTML/CSS
 JavaScript
 Node.js
