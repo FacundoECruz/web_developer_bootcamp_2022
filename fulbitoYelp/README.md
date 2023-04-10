@@ -12,13 +12,3 @@ JavaScript
 Node.js
 Express.js
 MongoDB
-## Getting Started
-To run the app locally, follow these steps:
-
-Clone the repository to your local machine
-
-Install the required dependencies using `npm install`
-
-Start the server using `npm start`
-
-Open your browser and navigate to `http://localhost:3000`
